@@ -56,7 +56,9 @@ jobs:
         run: npm run typecheck
 
       - name: Lint
-        run: npm run lint:check
+        run: npx eslint src test --max-warnings 0
+        env:
+          ESLINT_USE_FLAT_CONFIG: "false"
 
       - name: Format check
         run: npm run format:check
@@ -100,7 +102,9 @@ jobs:
         run: npm run typecheck
 
       - name: Lint
-        run: npm run lint:check
+        run: npx eslint src --max-warnings 0
+        env:
+          ESLINT_USE_FLAT_CONFIG: "false"
 
       - name: Format check
         run: npm run format:check
