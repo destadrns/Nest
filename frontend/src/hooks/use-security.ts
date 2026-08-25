@@ -15,12 +15,14 @@ export function useSecuritySummary() {
 export function useStartMfa() {
   return useMutation({
     mutationFn: async () => {
-      const res = await api.post<ApiResponse<{
-        secret: string;
-        uri: string;
-        recoveryCodes: string[];
-        _hashedCodes: string[];
-      }>>('/security/mfa/setup', {});
+      const res = await api.post<
+        ApiResponse<{
+          secret: string;
+          uri: string;
+          recoveryCodes: string[];
+          _hashedCodes: string[];
+        }>
+      >('/security/mfa/setup', {});
       return res.data;
     },
   });
@@ -29,11 +31,7 @@ export function useStartMfa() {
 export function useEnableMfa() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: async (input: {
-      secret: string;
-      token: string;
-      recoveryHashes?: string[];
-    }) => {
+    mutationFn: async (input: { secret: string; token: string; recoveryHashes?: string[] }) => {
       const res = await api.post<ApiResponse<{ success: boolean }>>('/security/mfa/enable', input);
       return res.data;
     },
@@ -47,7 +45,9 @@ export function useDisableMfa() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (password: string) => {
-      const res = await api.post<ApiResponse<{ success: boolean }>>('/security/mfa/disable', { password });
+      const res = await api.post<ApiResponse<{ success: boolean }>>('/security/mfa/disable', {
+        password,
+      });
       return res.data;
     },
     onSuccess: () => {

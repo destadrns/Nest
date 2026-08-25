@@ -41,20 +41,13 @@ export class SecurityController {
     @CurrentUser('id') userId: string,
     @Body() dto: EnableMfaDto & { recoveryHashes?: string[] },
   ) {
-    const result = await this.securityService.enableMfa(
-      userId,
-      dto,
-      dto.recoveryHashes ?? [],
-    );
+    const result = await this.securityService.enableMfa(userId, dto, dto.recoveryHashes ?? []);
     return { data: result };
   }
 
   @Post('mfa/disable')
   @ApiOperation({ summary: 'Disable TOTP MFA with password confirmation' })
-  async disableMfa(
-    @CurrentUser('id') userId: string,
-    @Body() dto: DisableMfaDto,
-  ) {
+  async disableMfa(@CurrentUser('id') userId: string, @Body() dto: DisableMfaDto) {
     const result = await this.securityService.disableMfa(userId, dto);
     return { data: result };
   }
@@ -68,10 +61,7 @@ export class SecurityController {
 
   @Post('passkeys')
   @ApiOperation({ summary: 'Register a new WebAuthn passkey' })
-  async registerPasskey(
-    @CurrentUser('id') userId: string,
-    @Body() dto: PasskeyRegisterDto,
-  ) {
+  async registerPasskey(@CurrentUser('id') userId: string, @Body() dto: PasskeyRegisterDto) {
     const passkey = await this.securityService.registerPasskey(userId, dto);
     return { data: passkey };
   }
@@ -79,10 +69,7 @@ export class SecurityController {
   @Delete('passkeys/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Delete a WebAuthn passkey' })
-  async deletePasskey(
-    @CurrentUser('id') userId: string,
-    @Param('id') id: string,
-  ) {
+  async deletePasskey(@CurrentUser('id') userId: string, @Param('id') id: string) {
     await this.securityService.deletePasskey(userId, id);
   }
 }

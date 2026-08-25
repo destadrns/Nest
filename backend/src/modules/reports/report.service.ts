@@ -81,9 +81,8 @@ export class ReportService {
       expense: expenseAmount,
       expenseCount: expense?._count ?? 0,
       net: incomeAmount - expenseAmount,
-      savingsRate: incomeAmount > 0
-        ? Math.round(((incomeAmount - expenseAmount) / incomeAmount) * 100)
-        : 0,
+      savingsRate:
+        incomeAmount > 0 ? Math.round(((incomeAmount - expenseAmount) / incomeAmount) * 100) : 0,
     };
   }
 

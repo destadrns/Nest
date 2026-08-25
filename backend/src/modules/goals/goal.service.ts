@@ -1,7 +1,4 @@
-import {
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { AuditService } from '../audit/audit.service';
 import { CreateGoalDto, UpdateGoalDto } from './dto';
@@ -66,12 +63,10 @@ export class GoalService {
     });
     if (!existing) throw new NotFoundException('Goal not found');
 
-    const newCurrentAmount = dto.currentAmount !== undefined
-      ? BigInt(dto.currentAmount)
-      : existing.currentAmount;
-    const newTargetAmount = dto.targetAmount !== undefined
-      ? BigInt(dto.targetAmount)
-      : existing.targetAmount;
+    const newCurrentAmount =
+      dto.currentAmount !== undefined ? BigInt(dto.currentAmount) : existing.currentAmount;
+    const newTargetAmount =
+      dto.targetAmount !== undefined ? BigInt(dto.targetAmount) : existing.targetAmount;
 
     // Auto-complete if current >= target
     let newStatus = dto.status ?? existing.status;
@@ -86,7 +81,9 @@ export class GoalService {
         ...(dto.description !== undefined && { description: dto.description?.trim() ?? null }),
         ...(dto.targetAmount !== undefined && { targetAmount: newTargetAmount }),
         ...(dto.currentAmount !== undefined && { currentAmount: newCurrentAmount }),
-        ...(dto.targetDate !== undefined && { targetDate: dto.targetDate ? new Date(dto.targetDate) : null }),
+        ...(dto.targetDate !== undefined && {
+          targetDate: dto.targetDate ? new Date(dto.targetDate) : null,
+        }),
         ...(dto.icon !== undefined && { icon: dto.icon }),
         ...(dto.color !== undefined && { color: dto.color }),
         status: newStatus,
@@ -126,9 +123,13 @@ export class GoalService {
       ...goal,
       targetAmount: Number(goal.targetAmount),
       currentAmount: Number(goal.currentAmount),
-      percentComplete: Number(goal.targetAmount) > 0
-        ? Math.min(100, Math.round((Number(goal.currentAmount) / Number(goal.targetAmount)) * 100))
-        : 0,
+      percentComplete:
+        Number(goal.targetAmount) > 0
+          ? Math.min(
+              100,
+              Math.round((Number(goal.currentAmount) / Number(goal.targetAmount)) * 100),
+            )
+          : 0,
     };
   }
 }

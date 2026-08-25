@@ -17,7 +17,9 @@ export function useRecurringTransactions(familyId?: string) {
   return useQuery({
     queryKey: ['recurring', familyId],
     queryFn: async () => {
-      const res = await api.get<ApiResponse<RecurringTransaction[]>>(`/families/${familyId}/recurring`);
+      const res = await api.get<ApiResponse<RecurringTransaction[]>>(
+        `/families/${familyId}/recurring`,
+      );
       return res.data;
     },
     enabled: !!familyId,
@@ -28,7 +30,10 @@ export function useCreateRecurring(familyId?: string) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (input: CreateRecurringInput) => {
-      const res = await api.post<ApiResponse<RecurringTransaction>>(`/families/${familyId}/recurring`, input);
+      const res = await api.post<ApiResponse<RecurringTransaction>>(
+        `/families/${familyId}/recurring`,
+        input,
+      );
       return res.data;
     },
     onSuccess: () => {

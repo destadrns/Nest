@@ -27,7 +27,11 @@ class ApiClient {
     });
 
     if (!response.ok) {
-      if (response.status === 401 && !window.location.pathname.startsWith('/login') && !window.location.pathname.startsWith('/register')) {
+      if (
+        response.status === 401 &&
+        !window.location.pathname.startsWith('/login') &&
+        !window.location.pathname.startsWith('/register')
+      ) {
         // Session expired — redirect to login
         window.location.href = '/login';
       }

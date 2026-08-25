@@ -1,10 +1,4 @@
-import {
-  Controller,
-  Get,
-  Param,
-  Query,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiQuery } from '@nestjs/swagger';
 import { FamilyRole } from '@prisma/client';
 import { ReportService } from './report.service';
@@ -56,10 +50,7 @@ export class ReportController {
   @Roles(FamilyRole.VIEWER)
   @ApiOperation({ summary: 'Monthly income/expense trend' })
   @ApiQuery({ name: 'months', required: false, example: 12 })
-  async monthlyTrend(
-    @Param('familyId') familyId: string,
-    @Query('months') months?: string,
-  ) {
+  async monthlyTrend(@Param('familyId') familyId: string, @Query('months') months?: string) {
     const data = await this.reportService.getMonthlyTrend(
       familyId,
       months ? parseInt(months, 10) : 12,

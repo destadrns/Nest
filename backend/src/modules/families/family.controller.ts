@@ -35,12 +35,7 @@ export class FamilyController {
     @CurrentUser('id') userId: string,
     @Req() req: Request,
   ) {
-    const family = await this.familyService.create(
-      dto,
-      userId,
-      req.ip,
-      req.headers['user-agent'],
-    );
+    const family = await this.familyService.create(dto, userId, req.ip, req.headers['user-agent']);
     return { data: family };
   }
 

@@ -2,7 +2,11 @@ import { useState, useRef, useEffect, type FormEvent } from 'react';
 import { NavLink, useNavigate, Outlet, useLocation } from 'react-router-dom';
 import { useLogout } from '@/hooks/use-auth';
 import { useFamilies, useCreateFamily } from '@/hooks/use-family';
-import { useNotifications, useMarkNotificationRead, useMarkAllNotificationsRead } from '@/hooks/use-notifications';
+import {
+  useNotifications,
+  useMarkNotificationRead,
+  useMarkAllNotificationsRead,
+} from '@/hooks/use-notifications';
 import { useAccounts } from '@/hooks/use-accounts';
 import { useCategories, useCreateTransaction } from '@/hooks/use-transactions';
 import { useAppStore, type ThemePreference, type CurrencyPreference } from '@/stores/app-store';
@@ -56,7 +60,8 @@ export function AppLayout() {
   const markRead = useMarkNotificationRead(currentFamily?.id);
   const markAllRead = useMarkAllNotificationsRead(currentFamily?.id);
   const notifications = notificationsRes?.data ?? [];
-  const unreadCount = notificationsRes?.meta?.unreadCount ?? notifications.filter((n) => !n.isRead).length;
+  const unreadCount =
+    notificationsRes?.meta?.unreadCount ?? notifications.filter((n) => !n.isRead).length;
 
   const [showNotifications, setShowNotifications] = useState(false);
   const [showCommandPalette, setShowCommandPalette] = useState(false);
@@ -204,7 +209,10 @@ export function AppLayout() {
         </div>
 
         {/* Household Context Switcher Control */}
-        <div className="relative shrink-0 border-b border-[#D9E1EC]/60 dark:border-[#2A313A]/60 p-2.5" ref={dropdownRef}>
+        <div
+          className="relative shrink-0 border-b border-[#D9E1EC]/60 dark:border-[#2A313A]/60 p-2.5"
+          ref={dropdownRef}
+        >
           <button
             type="button"
             onClick={() => setFamilyDropdownOpen(!familyDropdownOpen)}
@@ -256,7 +264,9 @@ export function AppLayout() {
                     </button>
                   ))
                 ) : (
-                  <div className="px-2 py-1.5 text-xs text-[#98A2B3] dark:text-[#858F9D]">No households found</div>
+                  <div className="px-2 py-1.5 text-xs text-[#98A2B3] dark:text-[#858F9D]">
+                    No households found
+                  </div>
                 )}
               </div>
               <div className="mt-1 border-t border-[#D9E1EC]/60 dark:border-[#2A313A]/60 pt-1">
@@ -330,7 +340,10 @@ export function AppLayout() {
         </nav>
 
         {/* Anchored Bottom User Account & Control Panel */}
-        <div className="shrink-0 border-t border-[#D9E1EC]/60 dark:border-[#2A313A]/60 bg-[#F6F8FB] dark:bg-[#0A0D12] p-2.5 relative" ref={profileRef}>
+        <div
+          className="shrink-0 border-t border-[#D9E1EC]/60 dark:border-[#2A313A]/60 bg-[#F6F8FB] dark:bg-[#0A0D12] p-2.5 relative"
+          ref={profileRef}
+        >
           <div className="flex items-center justify-between rounded-lg border border-[#D9E1EC] dark:border-[#2A313A] bg-white dark:bg-[#11151B] p-2 shadow-2xs">
             <button
               onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
@@ -343,7 +356,9 @@ export function AppLayout() {
                 <span className="truncate text-xs font-bold text-[#101828] dark:text-[#F3F4F6]">
                   {user?.firstName} {user?.lastName}
                 </span>
-                <span className="truncate text-[9px] text-[#98A2B3] dark:text-[#858F9D]">{user?.email}</span>
+                <span className="truncate text-[9px] text-[#98A2B3] dark:text-[#858F9D]">
+                  {user?.email}
+                </span>
               </div>
             </button>
             <button
@@ -361,8 +376,12 @@ export function AppLayout() {
           {profileDropdownOpen && (
             <div className="animate-dropdown-enter absolute bottom-full left-2.5 right-2.5 z-50 mb-1 rounded-xl border border-[#D9E1EC] dark:border-[#2A313A] bg-white dark:bg-[#11151B] p-1.5 shadow-xl">
               <div className="border-b border-[#D9E1EC]/60 dark:border-[#2A313A]/60 px-2 py-1.5">
-                <div className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6]">{user?.firstName} {user?.lastName}</div>
-                <div className="text-[10px] text-[#98A2B3] dark:text-[#858F9D] font-mono">{user?.email}</div>
+                <div className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6]">
+                  {user?.firstName} {user?.lastName}
+                </div>
+                <div className="text-[10px] text-[#98A2B3] dark:text-[#858F9D] font-mono">
+                  {user?.email}
+                </div>
               </div>
               <div className="py-1 text-xs space-y-0.5">
                 <button
@@ -456,7 +475,9 @@ export function AppLayout() {
               className="btn-tactile flex items-center gap-2 rounded-lg border border-[#D9E1EC] dark:border-[#2A313A] bg-[#F6F8FB] dark:bg-[#181D24] px-2.5 py-1 text-xs text-[#475467] dark:text-[#B7C0CC] hover:border-[#356AE6]/50 dark:hover:border-[#5B8CFF]/50 hover:bg-white dark:hover:bg-[#11151B] transition shadow-2xs"
             >
               <Search className="h-3.5 w-3.5 text-[#98A2B3] dark:text-[#858F9D]" />
-              <span className="hidden sm:inline text-[#98A2B3] dark:text-[#858F9D]">Search commands or views...</span>
+              <span className="hidden sm:inline text-[#98A2B3] dark:text-[#858F9D]">
+                Search commands or views...
+              </span>
               <span className="sm:hidden text-[#98A2B3] dark:text-[#858F9D]">Search...</span>
               <kbd className="hidden sm:inline rounded border border-[#D9E1EC] dark:border-[#2A313A] bg-white dark:bg-[#11151B] px-1.5 py-0.5 text-[9px] font-mono font-bold text-[#475467] dark:text-[#B7C0CC]">
                 ⌘K
@@ -487,7 +508,9 @@ export function AppLayout() {
                 <div className="animate-dropdown-enter absolute right-0 top-full z-50 mt-2 w-[calc(100vw-32px)] max-w-sm sm:w-96 rounded-2xl border border-[#D9E1EC] dark:border-[#2A313A] bg-white dark:bg-[#11151B] p-3 shadow-xl">
                   <div className="flex items-center justify-between border-b border-[#D9E1EC]/60 dark:border-[#2A313A]/60 pb-2.5">
                     <div className="flex items-center gap-2">
-                      <h3 className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6]">Notifications</h3>
+                      <h3 className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6]">
+                        Notifications
+                      </h3>
                       {unreadCount > 0 && (
                         <span className="rounded-full bg-[rgba(224,90,103,0.1)] dark:bg-[rgba(240,107,120,0.2)] px-2 py-0.2 text-[9px] font-bold text-[#C53B4B] dark:text-[#F06B78]">
                           {unreadCount} new
@@ -524,10 +547,15 @@ export function AppLayout() {
                           <div className="flex items-start justify-between gap-2">
                             <span className="font-bold text-xs">{n.title}</span>
                             <span className="text-[9px] text-[#98A2B3] dark:text-[#858F9D] font-mono shrink-0">
-                              {new Date(n.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                              {new Date(n.createdAt).toLocaleTimeString([], {
+                                hour: '2-digit',
+                                minute: '2-digit',
+                              })}
                             </span>
                           </div>
-                          <p className="text-[11px] text-[#475467] dark:text-[#B7C0CC] mt-0.5 leading-relaxed">{n.message}</p>
+                          <p className="text-[11px] text-[#475467] dark:text-[#B7C0CC] mt-0.5 leading-relaxed">
+                            {n.message}
+                          </p>
                         </div>
                       ))
                     )}
@@ -665,7 +693,9 @@ export function AppLayout() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#101828]/50 dark:bg-black/70 backdrop-blur-xs p-4">
           <div className="animate-modal-pop w-full max-w-md rounded-2xl border border-[#D9E1EC] dark:border-[#2A313A] bg-white dark:bg-[#11151B] p-6 shadow-2xl">
             <div className="flex items-center justify-between border-b border-[#D9E1EC]/60 dark:border-[#2A313A]/60 pb-3">
-              <h3 className="text-sm font-bold text-[#101828] dark:text-[#F3F4F6]">Create Household Workspace</h3>
+              <h3 className="text-sm font-bold text-[#101828] dark:text-[#F3F4F6]">
+                Create Household Workspace
+              </h3>
               <button
                 onClick={() => setShowNewFamilyModal(false)}
                 className="btn-tactile rounded-md p-1 text-[#98A2B3] dark:text-[#858F9D] hover:bg-[#F0F4F8] dark:hover:bg-[#181D24] hover:text-[#101828] dark:hover:text-[#F3F4F6]"
@@ -674,12 +704,16 @@ export function AppLayout() {
               </button>
             </div>
             <p className="mt-2 text-xs text-[#475467] dark:text-[#B7C0CC]">
-              A household workspace keeps shared bank accounts, transactions, budgets, and goals organized under a single private ledger.
+              A household workspace keeps shared bank accounts, transactions, budgets, and goals
+              organized under a single private ledger.
             </p>
 
             <form onSubmit={handleCreateFamily} className="mt-4 space-y-4">
               <div>
-                <label htmlFor="familyName" className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6]">
+                <label
+                  htmlFor="familyName"
+                  className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6]"
+                >
                   Household Name
                 </label>
                 <Input
@@ -721,18 +755,29 @@ export function AppLayout() {
   );
 }
 
-function CommandPaletteModal({
-  onAction,
-}: {
-  onAction: (action: string) => void;
-}) {
+function CommandPaletteModal({ onAction }: { onAction: (action: string) => void }) {
   const [search, setSearch] = useState('');
 
   const commands = [
     { id: 'NEW_TRANSACTION', label: 'Record New Transaction', shortcut: 'N', icon: Plus },
-    { id: 'NAV_/dashboard', label: 'Go to Financial Dashboard', shortcut: 'G D', icon: LayoutDashboard },
-    { id: 'NAV_/transactions', label: 'Open Transactions Ledger', shortcut: 'G T', icon: ArrowLeftRight },
-    { id: 'NAV_/accounts', label: 'Manage Accounts & Balances', shortcut: 'G A', icon: WalletCards },
+    {
+      id: 'NAV_/dashboard',
+      label: 'Go to Financial Dashboard',
+      shortcut: 'G D',
+      icon: LayoutDashboard,
+    },
+    {
+      id: 'NAV_/transactions',
+      label: 'Open Transactions Ledger',
+      shortcut: 'G T',
+      icon: ArrowLeftRight,
+    },
+    {
+      id: 'NAV_/accounts',
+      label: 'Manage Accounts & Balances',
+      shortcut: 'G A',
+      icon: WalletCards,
+    },
     { id: 'NAV_/budgets', label: 'Configure Spending Budgets', shortcut: 'G B', icon: PieChart },
     { id: 'NAV_/goals', label: 'View Savings Goals', shortcut: 'G G', icon: Target },
     { id: 'NAV_/reports', label: 'Open Financial Reports', shortcut: 'G R', icon: BarChart3 },
@@ -740,9 +785,7 @@ function CommandPaletteModal({
     { id: 'NEW_FAMILY', label: 'Create New Household Workspace', shortcut: '', icon: Building2 },
   ];
 
-  const filtered = commands.filter((c) =>
-    c.label.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = commands.filter((c) => c.label.toLowerCase().includes(search.toLowerCase()));
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center bg-[#101828]/50 dark:bg-black/70 backdrop-blur-xs pt-20 px-4">
@@ -764,7 +807,9 @@ function CommandPaletteModal({
 
         <div className="max-h-72 overflow-y-auto p-1.5 space-y-0.5">
           {filtered.length === 0 ? (
-            <div className="py-8 text-center text-xs text-[#98A2B3] dark:text-[#858F9D]">No matching actions found.</div>
+            <div className="py-8 text-center text-xs text-[#98A2B3] dark:text-[#858F9D]">
+              No matching actions found.
+            </div>
           ) : (
             filtered.map((cmd) => {
               const Icon = cmd.icon;
@@ -853,7 +898,9 @@ function GlobalQuickTransactionModal({
             <div className="flex h-6 w-6 items-center justify-center rounded-md bg-[#101828] dark:bg-[#F3F4F6] text-white dark:text-[#0A0D12] text-xs font-bold">
               +
             </div>
-            <h3 className="text-sm font-bold text-[#101828] dark:text-[#F3F4F6]">Quick Add Transaction</h3>
+            <h3 className="text-sm font-bold text-[#101828] dark:text-[#F3F4F6]">
+              Quick Add Transaction
+            </h3>
           </div>
           <button
             onClick={onClose}
@@ -906,7 +953,9 @@ function GlobalQuickTransactionModal({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">Description</label>
+            <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">
+              Description
+            </label>
             <Input
               required
               value={description}
@@ -938,7 +987,9 @@ function GlobalQuickTransactionModal({
 
             {type === 'TRANSFER' ? (
               <div>
-                <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">To Account</label>
+                <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">
+                  To Account
+                </label>
                 <select
                   value={toAccountId}
                   onChange={(e) => setToAccountId(e.target.value)}
@@ -957,7 +1008,9 @@ function GlobalQuickTransactionModal({
               </div>
             ) : (
               <div>
-                <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">Category</label>
+                <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">
+                  Category
+                </label>
                 <select
                   value={categoryId}
                   onChange={(e) => setCategoryId(e.target.value)}
@@ -975,7 +1028,9 @@ function GlobalQuickTransactionModal({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">Date</label>
+            <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">
+              Date
+            </label>
             <Input
               type="date"
               required

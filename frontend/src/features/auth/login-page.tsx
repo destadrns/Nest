@@ -40,10 +40,7 @@ export function LoginPage() {
   return (
     <main className="relative flex min-h-dvh w-full flex-col justify-between overflow-x-hidden bg-[#F6F8FB] dark:bg-[#0A0D12] text-[#101828] dark:text-[#F3F4F6] select-none transition-colors duration-200">
       {/* ─── LAYER 1: AMBIENT COLOR GRADIENTS ─── */}
-      <div
-        className="pointer-events-none absolute inset-0 overflow-hidden"
-        aria-hidden="true"
-      >
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
         <div className="absolute -left-24 -top-24 h-96 w-96 rounded-full bg-[radial-gradient(circle_at_center,rgba(53,106,230,0.06)_0%,transparent_70%)] dark:bg-[radial-gradient(circle_at_center,rgba(91,140,255,0.08)_0%,transparent_70%)] blur-2xl sm:h-[500px] sm:w-[500px]" />
         <div className="absolute right-0 top-1/4 h-96 w-96 rounded-full bg-[radial-gradient(circle_at_center,rgba(24,184,154,0.05)_0%,transparent_70%)] dark:bg-[radial-gradient(circle_at_center,rgba(43,199,164,0.06)_0%,transparent_70%)] blur-3xl sm:h-[550px] sm:w-[550px]" />
       </div>
@@ -62,9 +59,22 @@ export function LoginPage() {
         >
           <defs>
             <pattern id="login-grid" width="48" height="48" patternUnits="userSpaceOnUse">
-              <path d="M 48 0 L 0 0 0 48" fill="none" stroke="currentColor" strokeWidth="0.5" strokeDasharray="2 4" />
+              <path
+                d="M 48 0 L 0 0 0 48"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="0.5"
+                strokeDasharray="2 4"
+              />
             </pattern>
-            <linearGradient id="login-curve-grad" x1="120" y1="750" x2="1480" y2="180" gradientUnits="userSpaceOnUse">
+            <linearGradient
+              id="login-curve-grad"
+              x1="120"
+              y1="750"
+              x2="1480"
+              y2="180"
+              gradientUnits="userSpaceOnUse"
+            >
               <stop offset="0%" stopColor="#356AE6" stopOpacity="0.05" />
               <stop offset="40%" stopColor="#356AE6" stopOpacity="0.25" />
               <stop offset="80%" stopColor="#18B89A" stopOpacity="0.30" />
@@ -101,14 +111,17 @@ export function LoginPage() {
           title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
           aria-label="Appearance Theme Toggle"
         >
-          {theme === 'dark' ? <Moon className="h-4 w-4 text-[#F3F4F6]" /> : <Sun className="h-4 w-4 text-[#101828]" />}
+          {theme === 'dark' ? (
+            <Moon className="h-4 w-4 text-[#F3F4F6]" />
+          ) : (
+            <Sun className="h-4 w-4 text-[#101828]" />
+          )}
         </button>
       </header>
 
       {/* ─── MAIN CONTENT: BALANCED TWO-COLUMN DESKTOP FLOW ─── */}
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 items-center justify-center px-4 py-6 sm:px-8 lg:px-12">
         <div className="grid w-full items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(360px,440px)] lg:gap-14 xl:gap-16">
-
           {/* Left Visual & Product Value Area (Desktop) */}
           <div className="hidden lg:flex flex-col justify-center space-y-6 min-w-0 pr-4">
             <div className="space-y-3 max-w-lg">
@@ -116,7 +129,8 @@ export function LoginPage() {
                 Your household finances, organized.
               </h1>
               <p className="text-sm text-[#475467] dark:text-[#B7C0CC] leading-relaxed">
-                Track spending, manage accounts, plan budgets, and work toward shared financial goals in one private workspace.
+                Track spending, manage accounts, plan budgets, and work toward shared financial
+                goals in one private workspace.
               </p>
             </div>
 
@@ -163,7 +177,10 @@ export function LoginPage() {
               {/* Form */}
               <form onSubmit={handleSubmit} className="mt-5 space-y-4">
                 <div>
-                  <label htmlFor="email" className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1.5">
+                  <label
+                    htmlFor="email"
+                    className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1.5"
+                  >
                     Email address
                   </label>
                   <Input
@@ -180,7 +197,10 @@ export function LoginPage() {
 
                 <div>
                   <div className="flex items-center justify-between mb-1.5">
-                    <label htmlFor="password" className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6]">
+                    <label
+                      htmlFor="password"
+                      className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6]"
+                    >
                       Password
                     </label>
                   </div>
@@ -202,7 +222,11 @@ export function LoginPage() {
                       tabIndex={-1}
                       aria-label="Toggle password visibility"
                     >
-                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4 text-current" />}
+                      {showPassword ? (
+                        <EyeOff className="h-4 w-4" />
+                      ) : (
+                        <Eye className="h-4 w-4 text-current" />
+                      )}
                     </button>
                   </div>
                 </div>
@@ -221,7 +245,10 @@ export function LoginPage() {
               {/* Secondary Action Link */}
               <div className="mt-5 border-t border-[#D9E1EC]/70 dark:border-[#2A313A]/70 pt-4 text-center text-xs text-[#475467] dark:text-[#B7C0CC]">
                 Don't have an account?{' '}
-                <Link to="/register" className="font-semibold text-[#356AE6] dark:text-[#5B8CFF] hover:underline">
+                <Link
+                  to="/register"
+                  className="font-semibold text-[#356AE6] dark:text-[#5B8CFF] hover:underline"
+                >
                   Create account
                 </Link>
               </div>
@@ -233,7 +260,6 @@ export function LoginPage() {
               </div>
             </div>
           </div>
-
         </div>
       </div>
 

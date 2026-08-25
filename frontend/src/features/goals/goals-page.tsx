@@ -8,16 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { EmptyState } from '@/components/ui/empty-state';
 import { Skeleton } from '@/components/ui/skeleton';
-import {
-  Target,
-  Plus,
-  Trash2,
-  CheckCircle2,
-  Calendar,
-  DollarSign,
-  X,
-  Edit2,
-} from 'lucide-react';
+import { Target, Plus, Trash2, CheckCircle2, Calendar, DollarSign, X, Edit2 } from 'lucide-react';
 
 export function GoalsPage() {
   const { currentFamily } = useAppStore();
@@ -72,25 +63,34 @@ export function GoalsPage() {
       {/* Aggregate Goal Snapshot Ribbon */}
       <div className="grid gap-3 sm:grid-cols-3 min-w-0">
         <div className="rounded-xl border border-[#D9E1EC] dark:border-[#2A313A] bg-white dark:bg-[#11151B] p-3.5 shadow-2xs min-w-0">
-          <span className="text-[11px] font-semibold text-[#475467] dark:text-[#B7C0CC] truncate block">Total Saved</span>
+          <span className="text-[11px] font-semibold text-[#475467] dark:text-[#B7C0CC] truncate block">
+            Total Saved
+          </span>
           <div className="mt-1 text-xl sm:text-2xl font-bold text-[#0E8A73] dark:text-[#2BC7A4] tabular-nums font-mono truncate">
             {formatCurrency(totalSaved, currentFamily.currency)}
           </div>
           <span className="text-[10px] text-[#98A2B3] dark:text-[#858F9D]">
-            {totalTarget > 0 ? Math.round((totalSaved / totalTarget) * 100) : 0}% of all milestone targets
+            {totalTarget > 0 ? Math.round((totalSaved / totalTarget) * 100) : 0}% of all milestone
+            targets
           </span>
         </div>
 
         <div className="rounded-xl border border-[#D9E1EC] dark:border-[#2A313A] bg-white dark:bg-[#11151B] p-3.5 shadow-2xs min-w-0">
-          <span className="text-[11px] font-semibold text-[#475467] dark:text-[#B7C0CC] truncate block">Aggregate Target Goal</span>
+          <span className="text-[11px] font-semibold text-[#475467] dark:text-[#B7C0CC] truncate block">
+            Aggregate Target Goal
+          </span>
           <div className="mt-1 text-xl sm:text-2xl font-bold text-[#101828] dark:text-[#F3F4F6] tabular-nums font-mono truncate">
             {formatCurrency(totalTarget, currentFamily.currency)}
           </div>
-          <span className="text-[10px] text-[#98A2B3] dark:text-[#858F9D]">{goalList.length} defined family milestones</span>
+          <span className="text-[10px] text-[#98A2B3] dark:text-[#858F9D]">
+            {goalList.length} defined family milestones
+          </span>
         </div>
 
         <div className="rounded-xl border border-[#D9E1EC] dark:border-[#2A313A] bg-white dark:bg-[#11151B] p-3.5 shadow-2xs min-w-0">
-          <span className="text-[11px] font-semibold text-[#475467] dark:text-[#B7C0CC] truncate block">Completed Milestones</span>
+          <span className="text-[11px] font-semibold text-[#475467] dark:text-[#B7C0CC] truncate block">
+            Completed Milestones
+          </span>
           <div className="mt-1 text-xl sm:text-2xl font-bold text-[#356AE6] dark:text-[#5B8CFF] tabular-nums font-mono truncate">
             {completedCount} of {goalList.length}
           </div>
@@ -106,7 +106,9 @@ export function GoalsPage() {
           <button
             onClick={() => setFilterTab('ALL')}
             className={`rounded-md px-2.5 py-0.5 text-[11px] font-bold transition ${
-              filterTab === 'ALL' ? 'bg-[#101828] dark:bg-[#5B8CFF] text-white shadow-2xs' : 'text-[#475467] dark:text-[#B7C0CC] hover:text-[#101828] dark:hover:text-[#F3F4F6]'
+              filterTab === 'ALL'
+                ? 'bg-[#101828] dark:bg-[#5B8CFF] text-white shadow-2xs'
+                : 'text-[#475467] dark:text-[#B7C0CC] hover:text-[#101828] dark:hover:text-[#F3F4F6]'
             }`}
           >
             All Goals ({goalList.length})
@@ -114,7 +116,9 @@ export function GoalsPage() {
           <button
             onClick={() => setFilterTab('ACTIVE')}
             className={`rounded-md px-2.5 py-0.5 text-[11px] font-bold transition ${
-              filterTab === 'ACTIVE' ? 'bg-[#101828] dark:bg-[#5B8CFF] text-white shadow-2xs' : 'text-[#475467] dark:text-[#B7C0CC] hover:text-[#101828] dark:hover:text-[#F3F4F6]'
+              filterTab === 'ACTIVE'
+                ? 'bg-[#101828] dark:bg-[#5B8CFF] text-white shadow-2xs'
+                : 'text-[#475467] dark:text-[#B7C0CC] hover:text-[#101828] dark:hover:text-[#F3F4F6]'
             }`}
           >
             In Progress ({goalList.length - completedCount})
@@ -122,7 +126,9 @@ export function GoalsPage() {
           <button
             onClick={() => setFilterTab('COMPLETED')}
             className={`rounded-md px-2.5 py-0.5 text-[11px] font-bold transition ${
-              filterTab === 'COMPLETED' ? 'bg-[#101828] dark:bg-[#5B8CFF] text-white shadow-2xs' : 'text-[#475467] dark:text-[#B7C0CC] hover:text-[#101828] dark:hover:text-[#F3F4F6]'
+              filterTab === 'COMPLETED'
+                ? 'bg-[#101828] dark:bg-[#5B8CFF] text-white shadow-2xs'
+                : 'text-[#475467] dark:text-[#B7C0CC] hover:text-[#101828] dark:hover:text-[#F3F4F6]'
             }`}
           >
             Completed ({completedCount})
@@ -151,7 +157,12 @@ export function GoalsPage() {
       ) : (
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {filteredGoals.map((goal) => (
-            <GoalCard key={goal.id} goal={goal} familyId={currentFamily.id} currency={currentFamily.currency} />
+            <GoalCard
+              key={goal.id}
+              goal={goal}
+              familyId={currentFamily.id}
+              currency={currentFamily.currency}
+            />
           ))}
         </div>
       )}
@@ -167,7 +178,15 @@ export function GoalsPage() {
   );
 }
 
-function GoalCard({ goal, familyId, currency }: { goal: FinancialGoal; familyId: string; currency: string }) {
+function GoalCard({
+  goal,
+  familyId,
+  currency,
+}: {
+  goal: FinancialGoal;
+  familyId: string;
+  currency: string;
+}) {
   const updateGoal = useUpdateGoal(familyId);
   const deleteGoal = useDeleteGoal(familyId);
   const [showAddMoney, setShowAddMoney] = useState(false);
@@ -212,9 +231,13 @@ function GoalCard({ goal, familyId, currency }: { goal: FinancialGoal; familyId:
           <div className="flex-1 min-w-0 pr-2">
             {!isEditing ? (
               <>
-                <h3 className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6] truncate">{goal.name}</h3>
+                <h3 className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6] truncate">
+                  {goal.name}
+                </h3>
                 {goal.description && (
-                  <p className="mt-0.5 text-[11px] text-[#475467] dark:text-[#B7C0CC] line-clamp-2">{goal.description}</p>
+                  <p className="mt-0.5 text-[11px] text-[#475467] dark:text-[#B7C0CC] line-clamp-2">
+                    {goal.description}
+                  </p>
                 )}
               </>
             ) : (
@@ -235,7 +258,11 @@ function GoalCard({ goal, familyId, currency }: { goal: FinancialGoal; familyId:
                   required
                 />
                 <div className="flex gap-1">
-                  <Button type="submit" size="xs" className="h-6 bg-[#101828] dark:bg-[#5B8CFF] dark:text-white">
+                  <Button
+                    type="submit"
+                    size="xs"
+                    className="h-6 bg-[#101828] dark:bg-[#5B8CFF] dark:text-white"
+                  >
                     Save
                   </Button>
                   <Button
@@ -313,7 +340,8 @@ function GoalCard({ goal, familyId, currency }: { goal: FinancialGoal; familyId:
               <span>Ongoing Target</span>
             )}
             <span className="text-[#475467] dark:text-[#B7C0CC] font-semibold">
-              {formatCurrency(Math.max(0, goal.targetAmount - (goal.currentAmount || 0)), currency)} left
+              {formatCurrency(Math.max(0, goal.targetAmount - (goal.currentAmount || 0)), currency)}{' '}
+              left
             </span>
           </div>
         </div>
@@ -333,7 +361,12 @@ function GoalCard({ goal, familyId, currency }: { goal: FinancialGoal; familyId:
                 placeholder="Amount"
                 className="h-7 text-xs font-mono"
               />
-              <Button type="submit" size="xs" isLoading={updateGoal.isPending} className="h-7 bg-[#101828] dark:bg-[#5B8CFF] dark:text-white">
+              <Button
+                type="submit"
+                size="xs"
+                isLoading={updateGoal.isPending}
+                className="h-7 bg-[#101828] dark:bg-[#5B8CFF] dark:text-white"
+              >
                 Add
               </Button>
               <Button
@@ -425,7 +458,9 @@ function CreateGoalModal({
 
         <form onSubmit={handleSubmit} className="mt-4 space-y-3.5">
           <div>
-            <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">Goal Name</label>
+            <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">
+              Goal Name
+            </label>
             <Input
               required
               value={name}
@@ -468,11 +503,7 @@ function CreateGoalModal({
             <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">
               Target Deadline (Optional)
             </label>
-            <Input
-              type="date"
-              value={targetDate}
-              onChange={(e) => setTargetDate(e.target.value)}
-            />
+            <Input type="date" value={targetDate} onChange={(e) => setTargetDate(e.target.value)} />
           </div>
 
           <div>

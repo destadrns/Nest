@@ -1,9 +1,4 @@
-import {
-  Injectable,
-  NotFoundException,
-  BadRequestException,
-  Logger,
-} from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, Logger } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { AuditService } from '../audit/audit.service';
 import { CreateRecurringDto, UpdateRecurringDto } from './dto';
@@ -156,10 +151,7 @@ export class RecurringService {
       where: {
         isActive: true,
         nextDueDate: { lte: now },
-        OR: [
-          { endDate: null },
-          { endDate: { gte: now } },
-        ],
+        OR: [{ endDate: null }, { endDate: { gte: now } }],
       },
     });
 
@@ -168,9 +160,7 @@ export class RecurringService {
       try {
         await this.prisma.$transaction(async (tx) => {
           // Create actual transaction
-          const balanceDelta = item.type === TransactionType.INCOME
-            ? item.amount
-            : -item.amount;
+          const balanceDelta = item.type === TransactionType.INCOME ? item.amount : -item.amount;
 
           await tx.transaction.create({
             data: {

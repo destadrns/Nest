@@ -48,7 +48,7 @@ export function AccountsPage() {
   const accounts = res?.data ?? [];
 
   const assetAccounts = accounts.filter((a) =>
-    ['CHECKING', 'SAVINGS', 'CASH', 'INVESTMENT', 'OTHER'].includes(a.type)
+    ['CHECKING', 'SAVINGS', 'CASH', 'INVESTMENT', 'OTHER'].includes(a.type),
   );
   const liabilityAccounts = accounts.filter((a) => ['CREDIT', 'LOAN'].includes(a.type));
 
@@ -94,31 +94,45 @@ export function AccountsPage() {
       {/* Financial Snapshot Balance Ribbon */}
       <div className="grid gap-3 sm:grid-cols-3 min-w-0">
         <div className="rounded-xl border border-[#D9E1EC] dark:border-[#2A313A] bg-white dark:bg-[#11151B] p-3.5 shadow-2xs min-w-0">
-          <span className="text-[11px] font-semibold text-[#475467] dark:text-[#B7C0CC] truncate block">Total Liquid & Invested Assets</span>
+          <span className="text-[11px] font-semibold text-[#475467] dark:text-[#B7C0CC] truncate block">
+            Total Liquid & Invested Assets
+          </span>
           <div className="mt-1 text-xl sm:text-2xl font-bold text-[#101828] dark:text-[#F3F4F6] tabular-nums font-mono truncate">
             {formatCurrency(totalAssets, currentFamily?.currency)}
           </div>
-          <span className="text-[10px] text-[#98A2B3] dark:text-[#858F9D]">{assetAccounts.length} asset accounts</span>
+          <span className="text-[10px] text-[#98A2B3] dark:text-[#858F9D]">
+            {assetAccounts.length} asset accounts
+          </span>
         </div>
 
         <div className="rounded-xl border border-[#D9E1EC] dark:border-[#2A313A] bg-white dark:bg-[#11151B] p-3.5 shadow-2xs min-w-0">
-          <span className="text-[11px] font-semibold text-[#475467] dark:text-[#B7C0CC] truncate block">Total Liabilities & Credit Lines</span>
+          <span className="text-[11px] font-semibold text-[#475467] dark:text-[#B7C0CC] truncate block">
+            Total Liabilities & Credit Lines
+          </span>
           <div className="mt-1 text-xl sm:text-2xl font-bold text-[#C53B4B] dark:text-[#F06B78] tabular-nums font-mono truncate">
             {formatCurrency(totalLiabilities, currentFamily?.currency)}
           </div>
-          <span className="text-[10px] text-[#98A2B3] dark:text-[#858F9D]">{liabilityAccounts.length} credit/loan lines</span>
+          <span className="text-[10px] text-[#98A2B3] dark:text-[#858F9D]">
+            {liabilityAccounts.length} credit/loan lines
+          </span>
         </div>
 
         <div className="rounded-xl border border-[#D9E1EC] dark:border-[#2A313A] bg-white dark:bg-[#11151B] p-3.5 shadow-2xs min-w-0">
-          <span className="text-[11px] font-semibold text-[#475467] dark:text-[#B7C0CC] truncate block">Consolidated Net Worth</span>
+          <span className="text-[11px] font-semibold text-[#475467] dark:text-[#B7C0CC] truncate block">
+            Consolidated Net Worth
+          </span>
           <div
             className={`mt-1 text-xl sm:text-2xl font-bold tabular-nums font-mono truncate ${
-              netWorth >= 0 ? 'text-[#0E8A73] dark:text-[#28C7A7]' : 'text-[#C53B4B] dark:text-[#F06B78]'
+              netWorth >= 0
+                ? 'text-[#0E8A73] dark:text-[#28C7A7]'
+                : 'text-[#C53B4B] dark:text-[#F06B78]'
             }`}
           >
             {formatCurrency(netWorth, currentFamily?.currency)}
           </div>
-          <span className="text-[10px] text-[#98A2B3] dark:text-[#858F9D]">Total assets minus liabilities</span>
+          <span className="text-[10px] text-[#98A2B3] dark:text-[#858F9D]">
+            Total assets minus liabilities
+          </span>
         </div>
       </div>
 
@@ -259,7 +273,9 @@ function AccountCard({
         </div>
       </div>
       <div className="mt-3 border-t border-[#D9E1EC]/60 dark:border-[#2A313A]/60 pt-2 flex items-baseline justify-between">
-        <span className="text-[9px] uppercase font-bold tracking-wider text-[#98A2B3] dark:text-[#858F9D]">Balance</span>
+        <span className="text-[9px] uppercase font-bold tracking-wider text-[#98A2B3] dark:text-[#858F9D]">
+          Balance
+        </span>
         <div
           className={`text-sm font-bold tabular-nums font-mono ${
             isLiability
@@ -328,8 +344,12 @@ function AccountDetailDrawer({
                 <Icon className="h-3.5 w-3.5" />
               </div>
               <div>
-                <span className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6]">{account.name}</span>
-                <span className="block text-[10px] text-[#98A2B3] dark:text-[#858F9D]">{typeDef.label}</span>
+                <span className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6]">
+                  {account.name}
+                </span>
+                <span className="block text-[10px] text-[#98A2B3] dark:text-[#858F9D]">
+                  {typeDef.label}
+                </span>
               </div>
             </div>
             <button
@@ -344,7 +364,9 @@ function AccountDetailDrawer({
             <div className="mt-5 space-y-4">
               {/* Account Balance Card */}
               <div className="rounded-xl border border-[#D9E1EC] dark:border-[#2A313A] bg-[#F6F8FB] dark:bg-[#181D24] p-4">
-                <span className="text-[10px] uppercase font-bold text-[#98A2B3] dark:text-[#858F9D]">Current Balance</span>
+                <span className="text-[10px] uppercase font-bold text-[#98A2B3] dark:text-[#858F9D]">
+                  Current Balance
+                </span>
                 <div
                   className={`text-2xl font-extrabold font-mono tabular-nums mt-0.5 ${
                     ['CREDIT', 'LOAN'].includes(account.type)
@@ -357,7 +379,12 @@ function AccountDetailDrawer({
                   {formatCurrency(account.balance, account.currency)}
                 </div>
                 <div className="mt-2 text-xs text-[#475467] dark:text-[#B7C0CC] flex items-center justify-between">
-                  <span>Institution: <strong className="text-[#101828] dark:text-[#F3F4F6] font-semibold">{account.institution || 'Direct / Cash'}</strong></span>
+                  <span>
+                    Institution:{' '}
+                    <strong className="text-[#101828] dark:text-[#F3F4F6] font-semibold">
+                      {account.institution || 'Direct / Cash'}
+                    </strong>
+                  </span>
                   <Badge variant={account.isActive ? 'income' : 'outline'} size="sm">
                     {account.isActive ? 'Active Ledger' : 'Archived'}
                   </Badge>
@@ -392,11 +419,17 @@ function AccountDetailDrawer({
                 ) : (
                   <div className="rounded-xl border border-[#D9E1EC] dark:border-[#2A313A] bg-white dark:bg-[#11151B] divide-y divide-[#D9E1EC]/60 dark:divide-[#2A313A]/60 overflow-hidden">
                     {recentTransactions.map((tx) => (
-                      <div key={tx.id} className="flex items-center justify-between p-2.5 text-xs hover:bg-[#F6F8FB] dark:hover:bg-[#181D24]">
+                      <div
+                        key={tx.id}
+                        className="flex items-center justify-between p-2.5 text-xs hover:bg-[#F6F8FB] dark:hover:bg-[#181D24]"
+                      >
                         <div>
-                          <div className="font-semibold text-[#101828] dark:text-[#F3F4F6] text-xs">{tx.description}</div>
+                          <div className="font-semibold text-[#101828] dark:text-[#F3F4F6] text-xs">
+                            {tx.description}
+                          </div>
                           <div className="text-[10px] text-[#98A2B3] dark:text-[#858F9D] font-mono">
-                            {new Date(tx.date).toLocaleDateString()} · {tx.category?.name || tx.type}
+                            {new Date(tx.date).toLocaleDateString()} ·{' '}
+                            {tx.category?.name || tx.type}
                           </div>
                         </div>
                         <div
@@ -420,7 +453,9 @@ function AccountDetailDrawer({
           ) : (
             <form onSubmit={handleSave} className="mt-5 space-y-3.5">
               <div>
-                <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">Account Name</label>
+                <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">
+                  Account Name
+                </label>
                 <Input
                   required
                   value={name}
@@ -449,16 +484,29 @@ function AccountDetailDrawer({
                   onChange={(e) => setIsActive(e.target.checked)}
                   className="rounded border-[#D9E1EC] dark:border-[#2A313A] bg-white dark:bg-[#181D24] text-[#101828] dark:text-[#5B8CFF] focus:ring-[#101828] dark:focus:ring-[#5B8CFF]"
                 />
-                <label htmlFor="isActiveToggle" className="text-xs font-medium text-[#101828] dark:text-[#F3F4F6]">
+                <label
+                  htmlFor="isActiveToggle"
+                  className="text-xs font-medium text-[#101828] dark:text-[#F3F4F6]"
+                >
                   Active account (uncheck to archive)
                 </label>
               </div>
 
               <div className="flex justify-end gap-2 pt-2">
-                <Button type="button" variant="outline" size="xs" onClick={() => setIsEditing(false)}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="xs"
+                  onClick={() => setIsEditing(false)}
+                >
                   Cancel
                 </Button>
-                <Button type="submit" size="xs" isLoading={updateAccount.isPending} className="bg-[#101828] dark:bg-[#F3F4F6] dark:text-[#0A0D12] hover:bg-[#1E293B] dark:hover:bg-[#E2E8F0]">
+                <Button
+                  type="submit"
+                  size="xs"
+                  isLoading={updateAccount.isPending}
+                  className="bg-[#101828] dark:bg-[#F3F4F6] dark:text-[#0A0D12] hover:bg-[#1E293B] dark:hover:bg-[#E2E8F0]"
+                >
                   Save Changes
                 </Button>
               </div>
@@ -543,7 +591,9 @@ function CreateAccountModal({
 
         <form onSubmit={handleSubmit} className="mt-4 space-y-3.5">
           <div>
-            <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">Account Name</label>
+            <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">
+              Account Name
+            </label>
             <Input
               required
               value={name}
@@ -553,7 +603,9 @@ function CreateAccountModal({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">Account Type</label>
+            <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">
+              Account Type
+            </label>
             <select
               value={type}
               onChange={(e) => setType(e.target.value as AccountType)}
@@ -664,7 +716,9 @@ function QuickTransferModal({
         <div className="flex items-center justify-between border-b border-[#D9E1EC]/60 dark:border-[#2A313A] pb-3">
           <div className="flex items-center gap-2">
             <ArrowRightLeft className="h-4 w-4 text-[#356AE6] dark:text-[#5B8CFF]" />
-            <h3 className="text-sm font-bold text-[#101828] dark:text-[#F3F4F6]">Quick Account Transfer</h3>
+            <h3 className="text-sm font-bold text-[#101828] dark:text-[#F3F4F6]">
+              Quick Account Transfer
+            </h3>
           </div>
           <button
             onClick={onClose}
@@ -683,7 +737,9 @@ function QuickTransferModal({
         <form onSubmit={handleTransfer} className="mt-4 space-y-3.5">
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">From Account</label>
+              <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">
+                From Account
+              </label>
               <select
                 value={fromAccountId}
                 onChange={(e) => setFromAccountId(e.target.value)}
@@ -699,7 +755,9 @@ function QuickTransferModal({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">To Account</label>
+              <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">
+                To Account
+              </label>
               <select
                 value={toAccountId}
                 onChange={(e) => setToAccountId(e.target.value)}
@@ -734,7 +792,9 @@ function QuickTransferModal({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">Notes / Description</label>
+            <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">
+              Notes / Description
+            </label>
             <Input
               value={description}
               onChange={(e) => setDescription(e.target.value)}

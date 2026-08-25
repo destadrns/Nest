@@ -25,7 +25,9 @@ export class CorrelationIdInterceptor implements NestInterceptor {
       tap({
         next: () => {
           const duration = Date.now() - start;
-          this.logger.log(`${method} ${url} ${response.statusCode} ${duration}ms [${correlationId}]`);
+          this.logger.log(
+            `${method} ${url} ${response.statusCode} ${duration}ms [${correlationId}]`,
+          );
         },
         error: () => {
           const duration = Date.now() - start;

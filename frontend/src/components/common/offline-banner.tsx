@@ -63,7 +63,9 @@ export function OfflineBanner() {
         {!isOnline ? (
           <>
             <WifiOff className="h-4 w-4" />
-            <span>You are offline. Transactions will be saved locally and synced once reconnected.</span>
+            <span>
+              You are offline. Transactions will be saved locally and synced once reconnected.
+            </span>
           </>
         ) : syncSuccess ? (
           <>
@@ -78,9 +80,7 @@ export function OfflineBanner() {
         )}
       </div>
       {queueCount > 0 && !syncSuccess && (
-        <span className="bg-black/20 px-2 py-0.5 rounded text-[10px]">
-          {queueCount} queued
-        </span>
+        <span className="bg-black/20 px-2 py-0.5 rounded text-[10px]">{queueCount} queued</span>
       )}
     </div>
   );

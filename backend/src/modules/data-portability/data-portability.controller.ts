@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Param,
-  Query,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiQuery } from '@nestjs/swagger';
 import { FamilyRole } from '@prisma/client';
 import { DataPortabilityService } from './data-portability.service';
@@ -25,10 +17,7 @@ export class DataPortabilityController {
   @Post('import/preview')
   @Roles(FamilyRole.MEMBER)
   @ApiOperation({ summary: 'Preview CSV/JSON transaction import and check duplicates' })
-  async preview(
-    @Param('familyId') familyId: string,
-    @Body() dto: ImportTransactionsDto,
-  ) {
+  async preview(@Param('familyId') familyId: string, @Body() dto: ImportTransactionsDto) {
     const result = await this.portabilityService.previewImport(familyId, dto);
     return { data: result };
   }

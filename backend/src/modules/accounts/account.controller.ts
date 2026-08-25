@@ -93,12 +93,6 @@ export class AccountController {
     @CurrentUser('id') userId: string,
     @Req() req: Request,
   ) {
-    await this.accountService.softDelete(
-      familyId,
-      id,
-      userId,
-      req.ip,
-      req.headers['user-agent'],
-    );
+    await this.accountService.softDelete(familyId, id, userId, req.ip, req.headers['user-agent']);
   }
 }

@@ -11,7 +11,8 @@ export class RegisterDto {
   @MinLength(8, { message: 'Password must be at least 8 characters' })
   @MaxLength(128, { message: 'Password must be at most 128 characters' })
   @Matches(/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])/, {
-    message: 'Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character',
+    message:
+      'Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character',
   })
   password!: string;
 
@@ -48,7 +49,8 @@ export class ChangePasswordDto {
   @MinLength(8)
   @MaxLength(128)
   @Matches(/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])/, {
-    message: 'Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character',
+    message:
+      'Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character',
   })
   newPassword!: string;
 }

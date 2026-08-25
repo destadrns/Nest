@@ -53,20 +53,14 @@ export class TransactionController {
   @Get()
   @Roles(FamilyRole.VIEWER)
   @ApiOperation({ summary: 'List transactions (paginated)' })
-  async findAll(
-    @Param('familyId') familyId: string,
-    @Query() query: TransactionQueryDto,
-  ) {
+  async findAll(@Param('familyId') familyId: string, @Query() query: TransactionQueryDto) {
     return this.transactionService.findAll(familyId, query);
   }
 
   @Get(':id')
   @Roles(FamilyRole.VIEWER)
   @ApiOperation({ summary: 'Get transaction' })
-  async findOne(
-    @Param('familyId') familyId: string,
-    @Param('id') id: string,
-  ) {
+  async findOne(@Param('familyId') familyId: string, @Param('id') id: string) {
     const transaction = await this.transactionService.findById(familyId, id);
     return { data: transaction };
   }

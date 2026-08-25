@@ -1,38 +1,40 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
 
-:root, [data-theme="light"] {
-  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+:root,
+[data-theme='light'] {
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   /* Brand & Semantic Palette (Light) */
   --primary-ink: #101828;
-  --primary-ink-hover: #1E293B;
-  --secondary-cobalt: #356AE6;
-  --accent-teal: #18B89A;
-  --accent-amber: #E7A83B;
-  --accent-coral: #E05A67;
+  --primary-ink-hover: #1e293b;
+  --secondary-cobalt: #356ae6;
+  --accent-teal: #18b89a;
+  --accent-amber: #e7a83b;
+  --accent-coral: #e05a67;
 
   /* Surfaces & Neutral Tokens (Light) */
-  --surface-bg: #F6F8FB;
-  --surface-card: #FFFFFF;
-  --surface-elevated: #FFFFFF;
-  --surface-hover: #F0F4F8;
-  --surface-muted: #F0F4F8;
-  --surface-border: #D9E1EC;
+  --surface-bg: #f6f8fb;
+  --surface-card: #ffffff;
+  --surface-elevated: #ffffff;
+  --surface-hover: #f0f4f8;
+  --surface-muted: #f0f4f8;
+  --surface-border: #d9e1ec;
 
   /* Inputs & Controls (Light) */
-  --input-bg: #FFFFFF;
-  --input-border: #D9E1EC;
-  --input-placeholder: #858F9D;
+  --input-bg: #ffffff;
+  --input-border: #d9e1ec;
+  --input-placeholder: #858f9d;
   --input-focus-border: #101828;
 
   /* Typography (Light) */
   --text-primary: #101828;
   --text-secondary: #475467;
   --text-muted: #667085;
-  --text-disabled: #98A2B3;
+  --text-disabled: #98a2b3;
 
   /* Centralized Motion Tokens */
   --motion-instant: 90ms;
@@ -45,33 +47,34 @@
   --ease-tactile: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.dark, [data-theme="dark"] {
+.dark,
+[data-theme='dark'] {
   /* Brand & Semantic Palette (Dark Charcoal) */
-  --primary-ink: #F3F4F6;
-  --primary-ink-hover: #E5E7EB;
-  --secondary-cobalt: #5B8CFF;
-  --accent-teal: #2BC7A4;
-  --accent-amber: #E8B24A;
-  --accent-coral: #F06B78;
+  --primary-ink: #f3f4f6;
+  --primary-ink-hover: #e5e7eb;
+  --secondary-cobalt: #5b8cff;
+  --accent-teal: #2bc7a4;
+  --accent-amber: #e8b24a;
+  --accent-coral: #f06b78;
 
   /* Surfaces & Neutral Tokens (Dark Charcoal) */
-  --surface-bg: #0A0D12;
-  --surface-card: #11151B;
-  --surface-elevated: #181D24;
-  --surface-hover: #20262E;
-  --surface-muted: #181D24;
-  --surface-border: #2A313A;
+  --surface-bg: #0a0d12;
+  --surface-card: #11151b;
+  --surface-elevated: #181d24;
+  --surface-hover: #20262e;
+  --surface-muted: #181d24;
+  --surface-border: #2a313a;
 
   /* Inputs & Controls (Dark) */
-  --input-bg: #11151B;
-  --input-border: #2A313A;
-  --input-placeholder: #858F9D;
-  --input-focus-border: #5B8CFF;
+  --input-bg: #11151b;
+  --input-border: #2a313a;
+  --input-placeholder: #858f9d;
+  --input-focus-border: #5b8cff;
 
   /* Typography (Dark Charcoal) */
-  --text-primary: #F3F4F6;
-  --text-secondary: #B7C0CC;
-  --text-muted: #858F9D;
+  --text-primary: #f3f4f6;
+  --text-secondary: #b7c0cc;
+  --text-muted: #858f9d;
   --text-disabled: #475467;
 }
 
@@ -83,8 +86,9 @@ html {
   text-size-adjust: 100%;
   background-color: var(--surface-bg);
   color: var(--text-primary);
-  transition: background-color var(--motion-fast) var(--ease-standard),
-              color var(--motion-fast) var(--ease-standard);
+  transition:
+    background-color var(--motion-fast) var(--ease-standard),
+    color var(--motion-fast) var(--ease-standard);
 }
 
 body {
@@ -97,8 +101,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  transition: background-color var(--motion-fast) var(--ease-standard),
-              color var(--motion-fast) var(--ease-standard);
+  transition:
+    background-color var(--motion-fast) var(--ease-standard),
+    color var(--motion-fast) var(--ease-standard);
 }
 
 #root {
@@ -151,10 +156,11 @@ body {
 
 /* ─── Tactile Motion Utility Classes ─── */
 .interactive-card {
-  transition: transform var(--motion-fast) var(--ease-tactile),
-              border-color var(--motion-fast) var(--ease-standard),
-              box-shadow var(--motion-fast) var(--ease-standard),
-              background-color var(--motion-fast) var(--ease-standard);
+  transition:
+    transform var(--motion-fast) var(--ease-tactile),
+    border-color var(--motion-fast) var(--ease-standard),
+    box-shadow var(--motion-fast) var(--ease-standard),
+    background-color var(--motion-fast) var(--ease-standard);
   will-change: transform;
 }
 
@@ -167,8 +173,9 @@ body {
 }
 
 .interactive-row {
-  transition: background-color var(--motion-fast) var(--ease-standard),
-              transform var(--motion-instant) var(--ease-standard);
+  transition:
+    background-color var(--motion-fast) var(--ease-standard),
+    transform var(--motion-instant) var(--ease-standard);
 }
 
 .interactive-row:active {
@@ -176,11 +183,12 @@ body {
 }
 
 .btn-tactile {
-  transition: transform var(--motion-instant) var(--ease-tactile),
-              background-color var(--motion-fast) var(--ease-standard),
-              border-color var(--motion-fast) var(--ease-standard),
-              box-shadow var(--motion-fast) var(--ease-standard),
-              opacity var(--motion-fast) var(--ease-standard);
+  transition:
+    transform var(--motion-instant) var(--ease-tactile),
+    background-color var(--motion-fast) var(--ease-standard),
+    border-color var(--motion-fast) var(--ease-standard),
+    box-shadow var(--motion-fast) var(--ease-standard),
+    opacity var(--motion-fast) var(--ease-standard);
   will-change: transform;
 }
 
@@ -277,18 +285,18 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #D9E1EC;
+  background: #d9e1ec;
   border-radius: 4px;
 }
 
 .dark ::-webkit-scrollbar-thumb {
-  background: #2A313A;
+  background: #2a313a;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #98A2B3;
+  background: #98a2b3;
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: #3B4450;
+  background: #3b4450;
 }

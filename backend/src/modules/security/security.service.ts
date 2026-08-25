@@ -67,11 +67,7 @@ export class SecurityService {
       resourceId: userId,
     });
 
-    await this.auditService.logSecurityEvent(
-      userId,
-      'MFA_ENABLED',
-      'MEDIUM',
-    );
+    await this.auditService.logSecurityEvent(userId, 'MFA_ENABLED', 'MEDIUM');
 
     return { success: true, mfaEnabled: true };
   }
@@ -106,11 +102,7 @@ export class SecurityService {
       resourceId: userId,
     });
 
-    await this.auditService.logSecurityEvent(
-      userId,
-      'MFA_DISABLED',
-      'HIGH',
-    );
+    await this.auditService.logSecurityEvent(userId, 'MFA_DISABLED', 'HIGH');
 
     return { success: true, mfaEnabled: false };
   }

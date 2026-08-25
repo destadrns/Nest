@@ -30,7 +30,11 @@ import {
   FolderCheck,
 } from 'lucide-react';
 
-const TX_TYPES: { value: TransactionType; label: string; variant: 'income' | 'expense' | 'info' | 'neutral' }[] = [
+const TX_TYPES: {
+  value: TransactionType;
+  label: string;
+  variant: 'income' | 'expense' | 'info' | 'neutral';
+}[] = [
   { value: 'INCOME', label: 'Income', variant: 'income' },
   { value: 'EXPENSE', label: 'Expense', variant: 'expense' },
   { value: 'TRANSFER', label: 'Transfer', variant: 'info' },
@@ -94,7 +98,7 @@ export function TransactionsPage() {
       ? tx.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
         tx.category?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         tx.account?.name?.toLowerCase().includes(searchQuery.toLowerCase())
-      : true
+      : true,
   );
 
   const toggleSelectAll = () => {
@@ -108,14 +112,14 @@ export function TransactionsPage() {
   const toggleSelectTx = (id: string, e: MouseEvent) => {
     e.stopPropagation();
     setSelectedTxIds((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
     );
   };
 
   const handleBulkDelete = async () => {
     if (
       !confirm(
-        `Are you sure you want to delete ${selectedTxIds.length} selected transaction(s)? This action cannot be undone.`
+        `Are you sure you want to delete ${selectedTxIds.length} selected transaction(s)? This action cannot be undone.`,
       )
     ) {
       return;
@@ -164,7 +168,11 @@ export function TransactionsPage() {
             Real-time stream of household income, spending, and account transfers.
           </p>
         </div>
-        <Button size="sm" onClick={() => setShowCreate(true)} className="flex items-center gap-1.5 shadow-xs font-bold text-xs h-8 bg-[#101828] dark:bg-[#F3F4F6] dark:text-[#0A0D12] hover:bg-[#1E293B] dark:hover:bg-[#E2E8F0] shrink-0">
+        <Button
+          size="sm"
+          onClick={() => setShowCreate(true)}
+          className="flex items-center gap-1.5 shadow-xs font-bold text-xs h-8 bg-[#101828] dark:bg-[#F3F4F6] dark:text-[#0A0D12] hover:bg-[#1E293B] dark:hover:bg-[#E2E8F0] shrink-0"
+        >
           <Plus className="h-3.5 w-3.5" />
           <span>New Transaction</span>
         </Button>
@@ -238,14 +246,21 @@ export function TransactionsPage() {
           )}
           {accountFilter && (
             <Badge variant="brand" size="sm" className="flex items-center gap-1">
-              <span>Account: {accounts.find((a) => a.id === accountFilter)?.name || accountFilter}</span>
+              <span>
+                Account: {accounts.find((a) => a.id === accountFilter)?.name || accountFilter}
+              </span>
               <X className="h-2.5 w-2.5 cursor-pointer" onClick={() => setParam('accountId', '')} />
             </Badge>
           )}
           {categoryFilter && (
             <Badge variant="brand" size="sm" className="flex items-center gap-1">
-              <span>Category: {categories?.find((c) => c.id === categoryFilter)?.name || categoryFilter}</span>
-              <X className="h-2.5 w-2.5 cursor-pointer" onClick={() => setParam('categoryId', '')} />
+              <span>
+                Category: {categories?.find((c) => c.id === categoryFilter)?.name || categoryFilter}
+              </span>
+              <X
+                className="h-2.5 w-2.5 cursor-pointer"
+                onClick={() => setParam('categoryId', '')}
+              />
             </Badge>
           )}
           {searchQuery && (
@@ -397,8 +412,12 @@ export function TransactionsPage() {
                       <td className="px-3.5 py-2 font-bold text-[#101828] dark:text-[#F3F4F6] hover:text-[#356AE6] dark:hover:text-[#5B8CFF] transition-colors">
                         {tx.description}
                       </td>
-                      <td className="px-3.5 py-2 text-[#475467] dark:text-[#B7C0CC]">{tx.category?.name || '—'}</td>
-                      <td className="px-3.5 py-2 text-[#475467] dark:text-[#B7C0CC] font-medium">{tx.account?.name || '—'}</td>
+                      <td className="px-3.5 py-2 text-[#475467] dark:text-[#B7C0CC]">
+                        {tx.category?.name || '—'}
+                      </td>
+                      <td className="px-3.5 py-2 text-[#475467] dark:text-[#B7C0CC] font-medium">
+                        {tx.account?.name || '—'}
+                      </td>
                       <td
                         className={`whitespace-nowrap px-3.5 py-2 text-right font-bold tabular-nums font-mono ${
                           tx.type === 'INCOME'
@@ -422,8 +441,15 @@ export function TransactionsPage() {
           {meta && meta.totalPages > 1 && (
             <div className="flex items-center justify-between border-t border-[#D9E1EC]/60 dark:border-[#2A313A]/60 px-3.5 py-2 text-xs text-[#475467] dark:text-[#B7C0CC]">
               <span className="text-[11px]">
-                Page <strong className="font-bold text-[#101828] dark:text-[#F3F4F6]">{meta.page}</strong> of{' '}
-                <strong className="font-bold text-[#101828] dark:text-[#F3F4F6]">{meta.totalPages}</strong> ({meta.total} entries)
+                Page{' '}
+                <strong className="font-bold text-[#101828] dark:text-[#F3F4F6]">
+                  {meta.page}
+                </strong>{' '}
+                of{' '}
+                <strong className="font-bold text-[#101828] dark:text-[#F3F4F6]">
+                  {meta.totalPages}
+                </strong>{' '}
+                ({meta.total} entries)
               </span>
               <div className="flex items-center gap-1">
                 <Button
@@ -460,7 +486,9 @@ export function TransactionsPage() {
               <div className="flex items-center justify-between border-b border-[#D9E1EC]/60 dark:border-[#2A313A]/60 pb-3">
                 <div className="flex items-center gap-2">
                   <SlidersHorizontal className="h-4 w-4 text-[#356AE6] dark:text-[#5B8CFF]" />
-                  <h3 className="text-sm font-bold text-[#101828] dark:text-[#F3F4F6]">Ledger Filters</h3>
+                  <h3 className="text-sm font-bold text-[#101828] dark:text-[#F3F4F6]">
+                    Ledger Filters
+                  </h3>
                 </div>
                 <button
                   onClick={() => setShowFilterDrawer(false)}
@@ -471,7 +499,9 @@ export function TransactionsPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1.5">Account</label>
+                <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1.5">
+                  Account
+                </label>
                 <select
                   value={accountFilter}
                   onChange={(e) => setParam('accountId', e.target.value)}
@@ -487,7 +517,9 @@ export function TransactionsPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1.5">Category</label>
+                <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1.5">
+                  Category
+                </label>
                 <select
                   value={categoryFilter}
                   onChange={(e) => setParam('categoryId', e.target.value)}
@@ -555,7 +587,9 @@ export function TransactionsPage() {
             <div className="flex items-center justify-between border-b border-[#D9E1EC]/60 dark:border-[#2A313A]/60 pb-3">
               <div className="flex items-center gap-2">
                 <FolderCheck className="h-4 w-4 text-[#356AE6] dark:text-[#5B8CFF]" />
-                <h3 className="text-sm font-bold text-[#101828] dark:text-[#F3F4F6]">Bulk Categorize</h3>
+                <h3 className="text-sm font-bold text-[#101828] dark:text-[#F3F4F6]">
+                  Bulk Categorize
+                </h3>
               </div>
               <button
                 onClick={() => setBatchCategoryModalOpen(false)}
@@ -654,10 +688,16 @@ function TransactionDetailDrawer({
         <div>
           <div className="flex items-center justify-between border-b border-[#D9E1EC]/60 dark:border-[#2A313A]/60 pb-3">
             <div className="flex items-center gap-2">
-              <Badge variant={tx.type === 'INCOME' ? 'income' : tx.type === 'EXPENSE' ? 'expense' : 'info'}>
+              <Badge
+                variant={
+                  tx.type === 'INCOME' ? 'income' : tx.type === 'EXPENSE' ? 'expense' : 'info'
+                }
+              >
                 {tx.type}
               </Badge>
-              <span className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6]">Transaction Details</span>
+              <span className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6]">
+                Transaction Details
+              </span>
             </div>
             <button
               onClick={onClose}
@@ -670,7 +710,9 @@ function TransactionDetailDrawer({
           {!isEditing ? (
             <div className="mt-5 space-y-4">
               <div>
-                <span className="text-[10px] uppercase font-bold text-[#98A2B3] dark:text-[#858F9D]">Amount</span>
+                <span className="text-[10px] uppercase font-bold text-[#98A2B3] dark:text-[#858F9D]">
+                  Amount
+                </span>
                 <div
                   className={`text-2xl font-extrabold font-mono tabular-nums mt-0.5 ${
                     tx.type === 'INCOME'
@@ -692,11 +734,15 @@ function TransactionDetailDrawer({
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[#475467] dark:text-[#B7C0CC]">Category</span>
-                  <strong className="text-[#101828] dark:text-[#F3F4F6]">{tx.category?.name || 'Uncategorized'}</strong>
+                  <strong className="text-[#101828] dark:text-[#F3F4F6]">
+                    {tx.category?.name || 'Uncategorized'}
+                  </strong>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[#475467] dark:text-[#B7C0CC]">Account</span>
-                  <strong className="text-[#101828] dark:text-[#F3F4F6]">{tx.account?.name || '—'}</strong>
+                  <strong className="text-[#101828] dark:text-[#F3F4F6]">
+                    {tx.account?.name || '—'}
+                  </strong>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[#475467] dark:text-[#B7C0CC]">Date</span>
@@ -709,7 +755,9 @@ function TransactionDetailDrawer({
           ) : (
             <form onSubmit={handleSave} className="mt-5 space-y-3.5">
               <div>
-                <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">Description</label>
+                <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">
+                  Description
+                </label>
                 <Input
                   required
                   value={description}
@@ -734,7 +782,9 @@ function TransactionDetailDrawer({
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">Category</label>
+                <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">
+                  Category
+                </label>
                 <select
                   value={categoryId}
                   onChange={(e) => setCategoryId(e.target.value)}
@@ -750,10 +800,20 @@ function TransactionDetailDrawer({
               </div>
 
               <div className="flex justify-end gap-2 pt-2">
-                <Button type="button" variant="outline" size="xs" onClick={() => setIsEditing(false)}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="xs"
+                  onClick={() => setIsEditing(false)}
+                >
                   Cancel
                 </Button>
-                <Button type="submit" size="xs" isLoading={saving} className="bg-[#101828] dark:bg-[#F3F4F6] dark:text-[#0A0D12] hover:bg-[#1E293B] dark:hover:bg-[#E2E8F0]">
+                <Button
+                  type="submit"
+                  size="xs"
+                  isLoading={saving}
+                  className="bg-[#101828] dark:bg-[#F3F4F6] dark:text-[#0A0D12] hover:bg-[#1E293B] dark:hover:bg-[#E2E8F0]"
+                >
                   Save Changes
                 </Button>
               </div>
@@ -849,7 +909,9 @@ function CreateTransactionModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#101828]/50 dark:bg-[#0A0D12]/70 backdrop-blur-xs p-4">
       <div className="animate-modal-pop w-full max-w-md rounded-2xl border border-[#D9E1EC] dark:border-[#2A313A] bg-white dark:bg-[#11151B] p-6 shadow-2xl">
         <div className="flex items-center justify-between border-b border-[#D9E1EC]/60 dark:border-[#2A313A]/60 pb-3">
-          <h3 className="text-sm font-bold text-[#101828] dark:text-[#F3F4F6]">Record New Transaction</h3>
+          <h3 className="text-sm font-bold text-[#101828] dark:text-[#F3F4F6]">
+            Record New Transaction
+          </h3>
           <button
             onClick={onClose}
             className="btn-tactile rounded-md p-1 text-[#98A2B3] dark:text-[#858F9D] hover:bg-[#F0F4F8] dark:hover:bg-[#181D24] hover:text-[#101828] dark:hover:text-[#F3F4F6]"
@@ -899,7 +961,9 @@ function CreateTransactionModal({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">Description</label>
+            <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">
+              Description
+            </label>
             <Input
               required
               value={description}
@@ -931,7 +995,9 @@ function CreateTransactionModal({
 
             {type === 'TRANSFER' ? (
               <div>
-                <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">To Account</label>
+                <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">
+                  To Account
+                </label>
                 <select
                   value={toAccountId}
                   onChange={(e) => setToAccountId(e.target.value)}
@@ -950,7 +1016,9 @@ function CreateTransactionModal({
               </div>
             ) : (
               <div>
-                <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">Category</label>
+                <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">
+                  Category
+                </label>
                 <select
                   value={categoryId}
                   onChange={(e) => setCategoryId(e.target.value)}
@@ -968,7 +1036,9 @@ function CreateTransactionModal({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">Date</label>
+            <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">
+              Date
+            </label>
             <Input
               type="date"
               required

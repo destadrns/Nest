@@ -31,8 +31,15 @@ export function useUpdateAccount(familyId: string) {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, ...data }: { id: string; name?: string; institution?: string; isActive?: boolean }) =>
-      api.patch<ApiResponse<Account>>(`/families/${familyId}/accounts/${id}`, data),
+    mutationFn: ({
+      id,
+      ...data
+    }: {
+      id: string;
+      name?: string;
+      institution?: string;
+      isActive?: boolean;
+    }) => api.patch<ApiResponse<Account>>(`/families/${familyId}/accounts/${id}`, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['families', familyId, 'accounts'] });
     },

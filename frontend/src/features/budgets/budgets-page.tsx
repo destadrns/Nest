@@ -40,9 +40,7 @@ export function BudgetsPage() {
 
   const budgetList = budgets ?? [];
   const filteredBudgets =
-    periodFilter === 'ALL'
-      ? budgetList
-      : budgetList.filter((b) => b.period === periodFilter);
+    periodFilter === 'ALL' ? budgetList : budgetList.filter((b) => b.period === periodFilter);
 
   const totalCap = budgetList.reduce((sum, b) => sum + b.amount, 0);
   const totalSpent = budgetList.reduce((sum, b) => sum + (b.totalSpent || 0), 0);
@@ -73,15 +71,21 @@ export function BudgetsPage() {
       {/* Aggregate Budget Metrics */}
       <div className="grid gap-3 sm:grid-cols-3 min-w-0">
         <div className="rounded-xl border border-[#D9E1EC] dark:border-[#2A313A] bg-white dark:bg-[#11151B] p-3.5 shadow-2xs min-w-0">
-          <span className="text-[11px] font-semibold text-[#475467] dark:text-[#B7C0CC] truncate block">Total Monthly Limit</span>
+          <span className="text-[11px] font-semibold text-[#475467] dark:text-[#B7C0CC] truncate block">
+            Total Monthly Limit
+          </span>
           <div className="mt-1 text-xl sm:text-2xl font-bold text-[#101828] dark:text-[#F3F4F6] tabular-nums font-mono truncate">
             {formatCurrency(totalCap, currentFamily.currency)}
           </div>
-          <span className="text-[10px] text-[#98A2B3] dark:text-[#858F9D]">{budgetList.length} defined budget caps</span>
+          <span className="text-[10px] text-[#98A2B3] dark:text-[#858F9D]">
+            {budgetList.length} defined budget caps
+          </span>
         </div>
 
         <div className="rounded-xl border border-[#D9E1EC] dark:border-[#2A313A] bg-white dark:bg-[#11151B] p-3.5 shadow-2xs min-w-0">
-          <span className="text-[11px] font-semibold text-[#475467] dark:text-[#B7C0CC] truncate block">Total Spent</span>
+          <span className="text-[11px] font-semibold text-[#475467] dark:text-[#B7C0CC] truncate block">
+            Total Spent
+          </span>
           <div className="mt-1 text-xl sm:text-2xl font-bold text-[#C53B4B] dark:text-[#F06B78] tabular-nums font-mono truncate">
             {formatCurrency(totalSpent, currentFamily.currency)}
           </div>
@@ -91,11 +95,15 @@ export function BudgetsPage() {
         </div>
 
         <div className="rounded-xl border border-[#D9E1EC] dark:border-[#2A313A] bg-white dark:bg-[#11151B] p-3.5 shadow-2xs">
-          <span className="text-[11px] font-semibold text-[#475467] dark:text-[#B7C0CC]">Budget Health</span>
+          <span className="text-[11px] font-semibold text-[#475467] dark:text-[#B7C0CC]">
+            Budget Health
+          </span>
           <div className="mt-1 flex items-center gap-2">
             <span
               className={`text-xl font-bold tabular-nums font-mono ${
-                overBudgetCount > 0 ? 'text-[#E05A67] dark:text-[#F06B78]' : 'text-[#0E8A73] dark:text-[#2BC7A4]'
+                overBudgetCount > 0
+                  ? 'text-[#E05A67] dark:text-[#F06B78]'
+                  : 'text-[#0E8A73] dark:text-[#2BC7A4]'
               }`}
             >
               {overBudgetCount > 0 ? `${overBudgetCount} Over Limit` : 'All On Track'}
@@ -152,7 +160,7 @@ export function BudgetsPage() {
                 navigate(
                   budget.categoryId
                     ? `/transactions?categoryId=${budget.categoryId}&type=EXPENSE`
-                    : `/transactions?type=EXPENSE`
+                    : `/transactions?type=EXPENSE`,
                 );
               }}
             />
@@ -195,7 +203,9 @@ function BudgetCard({
             {budget.name}
           </h3>
           <div className="flex items-center gap-2 text-[10px] text-[#98A2B3] dark:text-[#858F9D] mt-0.5">
-            <span className="font-semibold text-[#475467] dark:text-[#B7C0CC]">{budget.period}</span>
+            <span className="font-semibold text-[#475467] dark:text-[#B7C0CC]">
+              {budget.period}
+            </span>
             <span>•</span>
             <span className="flex items-center gap-1 font-mono">
               <Calendar className="h-3 w-3" />
@@ -255,7 +265,11 @@ function BudgetCard({
         <div className="h-1.5 w-full overflow-hidden rounded-full bg-[#F0F4F8] dark:bg-[#181D24]">
           <div
             className={`h-full rounded-full transition-all duration-300 ${
-              isOver ? 'bg-[#E05A67] dark:bg-[#F06B78]' : isWarning ? 'bg-[#E7A83B] dark:bg-[#EAB04A]' : 'bg-[#101828] dark:bg-[#5B8CFF]'
+              isOver
+                ? 'bg-[#E05A67] dark:bg-[#F06B78]'
+                : isWarning
+                  ? 'bg-[#E7A83B] dark:bg-[#EAB04A]'
+                  : 'bg-[#101828] dark:bg-[#5B8CFF]'
             }`}
             style={{ width: `${Math.min(100, percent)}%` }}
           />
@@ -344,7 +358,9 @@ function CreateBudgetModal({
 
         <form onSubmit={handleSubmit} className="mt-4 space-y-3.5">
           <div>
-            <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">Budget Label</label>
+            <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">
+              Budget Label
+            </label>
             <Input
               required
               value={name}
@@ -355,7 +371,9 @@ function CreateBudgetModal({
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">Period</label>
+              <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">
+                Period
+              </label>
               <select
                 value={period}
                 onChange={(e) => setPeriod(e.target.value as BudgetPeriod)}
@@ -403,7 +421,9 @@ function CreateBudgetModal({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">Effective Start Date</label>
+            <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">
+              Effective Start Date
+            </label>
             <Input
               type="date"
               required

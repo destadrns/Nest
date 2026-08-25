@@ -1,9 +1,4 @@
-import {
-  Injectable,
-  NotFoundException,
-  BadRequestException,
-  Logger,
-} from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, Logger } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { AuditService } from '../audit/audit.service';
 import { ImportTransactionsDto } from './dto/data-portability.dto';
@@ -99,9 +94,7 @@ export class DataPortabilityService {
     await this.prisma.$transaction(async (tx) => {
       for (const item of toImport) {
         const amountBigInt = BigInt(item.amount);
-        const balanceDelta = item.type === TransactionType.INCOME
-          ? amountBigInt
-          : -amountBigInt;
+        const balanceDelta = item.type === TransactionType.INCOME ? amountBigInt : -amountBigInt;
 
         netBalanceDelta += balanceDelta;
 

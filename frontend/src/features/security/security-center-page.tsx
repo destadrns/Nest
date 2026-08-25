@@ -153,7 +153,10 @@ export function SecurityCenterPage() {
             <CheckCircle2 className="h-4 w-4 shrink-0 text-[#18B89A] dark:text-[#28C7A7]" />
             <span className="truncate">{successMsg}</span>
           </div>
-          <X className="h-3.5 w-3.5 cursor-pointer shrink-0 ml-2" onClick={() => setSuccessMsg('')} />
+          <X
+            className="h-3.5 w-3.5 cursor-pointer shrink-0 ml-2"
+            onClick={() => setSuccessMsg('')}
+          />
         </div>
       )}
 
@@ -164,15 +167,21 @@ export function SecurityCenterPage() {
             <ShieldCheck className="h-4.5 w-4.5 text-[#18B89A] dark:text-[#28C7A7]" />
           </div>
           <div className="min-w-0">
-            <h2 className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6] truncate">Account Protection Status</h2>
+            <h2 className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6] truncate">
+              Account Protection Status
+            </h2>
             <p className="text-[11px] text-[#475467] dark:text-[#B7C0CC] truncate">
-              {summary?.user.mfaEnabled ? 'Two-Factor Authentication Active' : 'Two-Factor Authentication Disabled'} ·{' '}
-              {summary?.user.passkeyCount ?? 0} Passkey Credentials
+              {summary?.user.mfaEnabled
+                ? 'Two-Factor Authentication Active'
+                : 'Two-Factor Authentication Disabled'}{' '}
+              · {summary?.user.passkeyCount ?? 0} Passkey Credentials
             </p>
           </div>
         </div>
         <div className="flex items-baseline gap-2 self-start sm:self-auto shrink-0">
-          <span className="text-xl font-bold text-[#101828] dark:text-[#F3F4F6] tabular-nums font-mono">{score}</span>
+          <span className="text-xl font-bold text-[#101828] dark:text-[#F3F4F6] tabular-nums font-mono">
+            {score}
+          </span>
           <span className="text-[10px] text-[#98A2B3] dark:text-[#858F9D]">/ 100</span>
           <Badge variant={score >= 80 ? 'income' : 'warning'} size="sm" className="ml-1">
             {score >= 80 ? 'Strong' : 'Needs Review'}
@@ -190,8 +199,12 @@ export function SecurityCenterPage() {
                 <Smartphone className="h-3.5 w-3.5" />
               </div>
               <div className="min-w-0">
-                <CardTitle className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6] truncate">Two-Factor Authentication</CardTitle>
-                <p className="text-[10px] text-[#475467] dark:text-[#B7C0CC] truncate">TOTP Authenticator Application</p>
+                <CardTitle className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6] truncate">
+                  Two-Factor Authentication
+                </CardTitle>
+                <p className="text-[10px] text-[#475467] dark:text-[#B7C0CC] truncate">
+                  TOTP Authenticator Application
+                </p>
               </div>
             </div>
             {summary?.user.mfaEnabled ? (
@@ -207,7 +220,8 @@ export function SecurityCenterPage() {
 
           <CardContent className="space-y-3 text-xs text-[#475467] dark:text-[#B7C0CC] pt-2 min-w-0">
             <p className="leading-relaxed text-[11px]">
-              Require a 6-digit verification code from Google Authenticator, 1Password, or Apple Keychain when signing in.
+              Require a 6-digit verification code from Google Authenticator, 1Password, or Apple
+              Keychain when signing in.
             </p>
 
             {!summary?.user.mfaEnabled && !setupData && (
@@ -222,19 +236,28 @@ export function SecurityCenterPage() {
             )}
 
             {setupData && (
-              <form onSubmit={handleVerifyEnableMfa} className="space-y-2.5 rounded-lg border border-[#D9E1EC] dark:border-[#2A313A] bg-[#F6F8FB] dark:bg-[#181D24] p-3 min-w-0">
+              <form
+                onSubmit={handleVerifyEnableMfa}
+                className="space-y-2.5 rounded-lg border border-[#D9E1EC] dark:border-[#2A313A] bg-[#F6F8FB] dark:bg-[#181D24] p-3 min-w-0"
+              >
                 <div>
-                  <div className="font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1 text-[11px]">1. Add Secret Key to App:</div>
+                  <div className="font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1 text-[11px]">
+                    1. Add Secret Key to App:
+                  </div>
                   <div className="rounded bg-white dark:bg-[#11151B] border border-[#D9E1EC] dark:border-[#2A313A] p-2 font-mono text-[10px] select-all break-all text-[#101828] dark:text-[#F3F4F6]">
                     {setupData.secret}
                   </div>
                 </div>
 
                 <div>
-                  <div className="font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1 text-[11px]">2. Single-Use Emergency Recovery Codes:</div>
+                  <div className="font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1 text-[11px]">
+                    2. Single-Use Emergency Recovery Codes:
+                  </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 rounded bg-white dark:bg-[#11151B] border border-[#D9E1EC] dark:border-[#2A313A] p-2 font-mono text-[10px] text-[#475467] dark:text-[#B7C0CC]">
                     {setupData.recoveryCodes.map((code) => (
-                      <span key={code} className="truncate">{code}</span>
+                      <span key={code} className="truncate">
+                        {code}
+                      </span>
                     ))}
                   </div>
                 </div>
@@ -252,10 +275,21 @@ export function SecurityCenterPage() {
                       placeholder="123456"
                       className="w-28 font-mono text-center tracking-widest text-xs h-7"
                     />
-                    <Button type="submit" size="xs" isLoading={enableMfa.isPending} className="h-7 bg-[#101828] dark:bg-[#5B8CFF] dark:text-white">
+                    <Button
+                      type="submit"
+                      size="xs"
+                      isLoading={enableMfa.isPending}
+                      className="h-7 bg-[#101828] dark:bg-[#5B8CFF] dark:text-white"
+                    >
                       Confirm
                     </Button>
-                    <Button type="button" variant="ghost" size="xs" onClick={() => setSetupData(null)} className="h-7">
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="xs"
+                      onClick={() => setSetupData(null)}
+                      className="h-7"
+                    >
                       Cancel
                     </Button>
                   </div>
@@ -277,7 +311,10 @@ export function SecurityCenterPage() {
             )}
 
             {showDisableModal && (
-              <form onSubmit={handleDisableMfa} className="rounded-lg border border-[#E05A67]/30 bg-[rgba(224,90,103,0.08)] dark:bg-[rgba(240,107,120,0.15)] p-2.5 space-y-2">
+              <form
+                onSubmit={handleDisableMfa}
+                className="rounded-lg border border-[#E05A67]/30 bg-[rgba(224,90,103,0.08)] dark:bg-[rgba(240,107,120,0.15)] p-2.5 space-y-2"
+              >
                 <span className="block text-xs font-semibold text-[#C53B4B] dark:text-[#F06B78]">
                   Enter your account password to confirm removal:
                 </span>
@@ -290,10 +327,22 @@ export function SecurityCenterPage() {
                   className="h-7 text-xs"
                 />
                 <div className="flex gap-1.5 pt-1">
-                  <Button type="submit" variant="danger" size="xs" isLoading={disableMfa.isPending} className="h-7 bg-[#E05A67] dark:bg-[#F06B78]">
+                  <Button
+                    type="submit"
+                    variant="danger"
+                    size="xs"
+                    isLoading={disableMfa.isPending}
+                    className="h-7 bg-[#E05A67] dark:bg-[#F06B78]"
+                  >
                     Confirm Disable
                   </Button>
-                  <Button type="button" variant="ghost" size="xs" onClick={() => setShowDisableModal(false)} className="h-7">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="xs"
+                    onClick={() => setShowDisableModal(false)}
+                    className="h-7"
+                  >
                     Cancel
                   </Button>
                 </div>
@@ -310,8 +359,12 @@ export function SecurityCenterPage() {
                 <Fingerprint className="h-3.5 w-3.5" />
               </div>
               <div className="min-w-0">
-                <CardTitle className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6] truncate">Passkeys</CardTitle>
-                <p className="text-[10px] text-[#475467] dark:text-[#B7C0CC] truncate">Biometric & Hardware Security Keys</p>
+                <CardTitle className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6] truncate">
+                  Passkeys
+                </CardTitle>
+                <p className="text-[10px] text-[#475467] dark:text-[#B7C0CC] truncate">
+                  Biometric & Hardware Security Keys
+                </p>
               </div>
             </div>
             <Badge variant="neutral" size="sm" className="shrink-0">
@@ -336,7 +389,9 @@ export function SecurityCenterPage() {
                     className="flex items-center justify-between gap-2 rounded-lg border border-[#D9E1EC] dark:border-[#2A313A] bg-[#F6F8FB] dark:bg-[#181D24] p-2 min-w-0"
                   >
                     <div className="min-w-0">
-                      <div className="font-semibold text-[#101828] dark:text-[#F3F4F6] text-xs truncate">{key.name || 'Security Key'}</div>
+                      <div className="font-semibold text-[#101828] dark:text-[#F3F4F6] text-xs truncate">
+                        {key.name || 'Security Key'}
+                      </div>
                       <div className="text-[9px] text-[#98A2B3] dark:text-[#858F9D] font-mono">
                         Added {new Date(key.createdAt).toLocaleDateString()}
                       </div>
@@ -382,8 +437,12 @@ export function SecurityCenterPage() {
         <CardHeader className="flex flex-row items-center gap-2 pb-2">
           <History className="h-4 w-4 text-[#356AE6] dark:text-[#5B8CFF] shrink-0" />
           <div className="min-w-0">
-            <CardTitle className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6] truncate">Security Activity Log</CardTitle>
-            <p className="text-[10px] text-[#475467] dark:text-[#B7C0CC] truncate">Recent security-sensitive events and login activity</p>
+            <CardTitle className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6] truncate">
+              Security Activity Log
+            </CardTitle>
+            <p className="text-[10px] text-[#475467] dark:text-[#B7C0CC] truncate">
+              Recent security-sensitive events and login activity
+            </p>
           </div>
         </CardHeader>
         <CardContent className="pt-2 min-w-0">
@@ -404,8 +463,13 @@ export function SecurityCenterPage() {
                 </thead>
                 <tbody className="divide-y divide-[#D9E1EC]/40 dark:divide-[#2A313A]">
                   {summary.recentEvents.map((event) => (
-                    <tr key={event.id} className="hover:bg-[#F6F8FB] dark:hover:bg-[#181D24] transition-colors">
-                      <td className="px-3 py-2 font-medium text-[#101828] dark:text-[#F3F4F6] text-xs whitespace-nowrap">{event.eventType}</td>
+                    <tr
+                      key={event.id}
+                      className="hover:bg-[#F6F8FB] dark:hover:bg-[#181D24] transition-colors"
+                    >
+                      <td className="px-3 py-2 font-medium text-[#101828] dark:text-[#F3F4F6] text-xs whitespace-nowrap">
+                        {event.eventType}
+                      </td>
                       <td className="px-3 py-2 whitespace-nowrap">
                         <Badge
                           variant={

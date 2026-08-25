@@ -44,10 +44,7 @@ export class NotificationController {
   @Patch(':id/read')
   @Roles(FamilyRole.VIEWER)
   @ApiOperation({ summary: 'Mark notification as read' })
-  async markAsRead(
-    @CurrentUser('id') userId: string,
-    @Param('id') id: string,
-  ) {
+  async markAsRead(@CurrentUser('id') userId: string, @Param('id') id: string) {
     const notification = await this.notificationService.markAsRead(userId, id);
     return { data: notification };
   }
@@ -55,10 +52,7 @@ export class NotificationController {
   @Patch('read-all')
   @Roles(FamilyRole.VIEWER)
   @ApiOperation({ summary: 'Mark all notifications as read' })
-  async markAllAsRead(
-    @Param('familyId') familyId: string,
-    @CurrentUser('id') userId: string,
-  ) {
+  async markAllAsRead(@Param('familyId') familyId: string, @CurrentUser('id') userId: string) {
     await this.notificationService.markAllAsRead(userId, familyId);
     return { data: { success: true } };
   }
@@ -67,10 +61,7 @@ export class NotificationController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @Roles(FamilyRole.VIEWER)
   @ApiOperation({ summary: 'Delete notification' })
-  async delete(
-    @CurrentUser('id') userId: string,
-    @Param('id') id: string,
-  ) {
+  async delete(@CurrentUser('id') userId: string, @Param('id') id: string) {
     await this.notificationService.delete(userId, id);
   }
 }

@@ -53,7 +53,10 @@ export function useUpdateGoal(familyId?: string) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async ({ id, ...input }: UpdateGoalInput & { id: string }) => {
-      const res = await api.patch<ApiResponse<FinancialGoal>>(`/families/${familyId}/goals/${id}`, input);
+      const res = await api.patch<ApiResponse<FinancialGoal>>(
+        `/families/${familyId}/goals/${id}`,
+        input,
+      );
       return res.data;
     },
     onSuccess: () => {

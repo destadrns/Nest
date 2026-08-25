@@ -42,10 +42,7 @@ export class GoalController {
   @Roles(FamilyRole.VIEWER)
   @ApiOperation({ summary: 'List financial goals' })
   @ApiQuery({ name: 'status', required: false, enum: GoalStatus })
-  async findAll(
-    @Param('familyId') familyId: string,
-    @Query('status') status?: GoalStatus,
-  ) {
+  async findAll(@Param('familyId') familyId: string, @Query('status') status?: GoalStatus) {
     const goals = await this.goalService.findAllByFamily(familyId, status);
     return { data: goals };
   }

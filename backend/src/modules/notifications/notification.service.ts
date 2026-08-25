@@ -1,7 +1,4 @@
-import {
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { Prisma } from '@prisma/client';
 
@@ -115,12 +112,14 @@ export class NotificationService {
 
       if (percent >= 80) {
         const type = percent >= 100 ? 'BUDGET_EXCEEDED' : 'BUDGET_WARNING';
-        const title = percent >= 100
-          ? `Budget "${budget.name}" exceeded`
-          : `Budget "${budget.name}" at ${percent}%`;
-        const message = percent >= 100
-          ? `You've spent $${(spent / 100).toFixed(2)} of your $${(budgetAmount / 100).toFixed(2)} budget.`
-          : `You've used ${percent}% of your "${budget.name}" budget.`;
+        const title =
+          percent >= 100
+            ? `Budget "${budget.name}" exceeded`
+            : `Budget "${budget.name}" at ${percent}%`;
+        const message =
+          percent >= 100
+            ? `You've spent $${(spent / 100).toFixed(2)} of your $${(budgetAmount / 100).toFixed(2)} budget.`
+            : `You've used ${percent}% of your "${budget.name}" budget.`;
 
         for (const member of members) {
           await this.create({

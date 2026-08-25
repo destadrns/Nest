@@ -65,20 +65,15 @@ export function ReportsPage() {
   const { data: categorySpending, isLoading: loadingCat } = useCategorySpending(
     currentFamily?.id,
     from,
-    to
+    to,
   );
   const { data: incomeVsExpense, isLoading: loadingIvE } = useIncomeVsExpense(
     currentFamily?.id,
     from,
-    to
+    to,
   );
-  const { data: monthlyTrend, isLoading: loadingTrend } = useMonthlyTrend(
-    currentFamily?.id,
-    12
-  );
-  const { data: accountSummary, isLoading: loadingSummary } = useAccountSummary(
-    currentFamily?.id
-  );
+  const { data: monthlyTrend, isLoading: loadingTrend } = useMonthlyTrend(currentFamily?.id, 12);
+  const { data: accountSummary, isLoading: loadingSummary } = useAccountSummary(currentFamily?.id);
 
   if (!currentFamily) {
     return (
@@ -170,10 +165,14 @@ export function ReportsPage() {
             </div>
           </div>
           <div className="mt-1 text-xl sm:text-2xl font-bold text-[#0E8A73] dark:text-[#28C7A7] tabular-nums font-mono truncate">
-            {loadingIvE ? '...' : formatCurrency(incomeVsExpense?.income ?? 0, currentFamily.currency)}
+            {loadingIvE
+              ? '...'
+              : formatCurrency(incomeVsExpense?.income ?? 0, currentFamily.currency)}
           </div>
           <div className="mt-0.5 flex items-center justify-between text-[10px] text-[#98A2B3] dark:text-[#858F9D]">
-            <span className="truncate">{incomeVsExpense?.incomeCount ?? 0} transaction inflows</span>
+            <span className="truncate">
+              {incomeVsExpense?.incomeCount ?? 0} transaction inflows
+            </span>
             <ChevronRight className="h-3 w-3 opacity-0 group-hover:opacity-100 transition shrink-0" />
           </div>
         </div>
@@ -192,10 +191,14 @@ export function ReportsPage() {
             </div>
           </div>
           <div className="mt-1 text-xl sm:text-2xl font-bold text-[#C53B4B] dark:text-[#F06B78] tabular-nums font-mono truncate">
-            {loadingIvE ? '...' : formatCurrency(incomeVsExpense?.expense ?? 0, currentFamily.currency)}
+            {loadingIvE
+              ? '...'
+              : formatCurrency(incomeVsExpense?.expense ?? 0, currentFamily.currency)}
           </div>
           <div className="mt-0.5 flex items-center justify-between text-[10px] text-[#98A2B3] dark:text-[#858F9D]">
-            <span className="truncate">{incomeVsExpense?.expenseCount ?? 0} transaction outflows</span>
+            <span className="truncate">
+              {incomeVsExpense?.expenseCount ?? 0} transaction outflows
+            </span>
             <ChevronRight className="h-3 w-3 opacity-0 group-hover:opacity-100 transition shrink-0" />
           </div>
         </div>
@@ -203,12 +206,16 @@ export function ReportsPage() {
         {/* Net Savings & Savings Rate */}
         <div className="rounded-xl border border-[#D9E1EC] dark:border-[#2A313A] bg-white dark:bg-[#11151B] p-3.5 shadow-2xs min-w-0">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-semibold text-[#475467] dark:text-[#B7C0CC] truncate">Net Retained Savings</span>
+            <span className="text-[11px] font-semibold text-[#475467] dark:text-[#B7C0CC] truncate">
+              Net Retained Savings
+            </span>
             <TrendingUp className="h-3.5 w-3.5 text-[#356AE6] dark:text-[#5B8CFF] shrink-0" />
           </div>
           <div
             className={`mt-1 text-xl sm:text-2xl font-bold tabular-nums font-mono truncate ${
-              (incomeVsExpense?.net ?? 0) >= 0 ? 'text-[#101828] dark:text-[#F3F4F6]' : 'text-[#C53B4B] dark:text-[#F06B78]'
+              (incomeVsExpense?.net ?? 0) >= 0
+                ? 'text-[#101828] dark:text-[#F3F4F6]'
+                : 'text-[#C53B4B] dark:text-[#F06B78]'
             }`}
           >
             {loadingIvE ? '...' : formatCurrency(incomeVsExpense?.net ?? 0, currentFamily.currency)}
@@ -233,10 +240,14 @@ export function ReportsPage() {
             <Wallet className="h-3.5 w-3.5 text-[#98A2B3] dark:text-[#858F9D] shrink-0" />
           </div>
           <div className="mt-1 text-xl sm:text-2xl font-bold text-[#101828] dark:text-[#F3F4F6] tabular-nums font-mono truncate">
-            {loadingSummary ? '...' : formatCurrency(accountSummary?.netWorth ?? 0, currentFamily.currency)}
+            {loadingSummary
+              ? '...'
+              : formatCurrency(accountSummary?.netWorth ?? 0, currentFamily.currency)}
           </div>
           <div className="mt-0.5 flex items-center justify-between text-[10px] text-[#98A2B3] dark:text-[#858F9D]">
-            <span className="truncate">Assets: {formatCurrency(accountSummary?.totalAssets ?? 0, currentFamily.currency)}</span>
+            <span className="truncate">
+              Assets: {formatCurrency(accountSummary?.totalAssets ?? 0, currentFamily.currency)}
+            </span>
             <ChevronRight className="h-3 w-3 opacity-0 group-hover:opacity-100 transition shrink-0" />
           </div>
         </div>
@@ -249,8 +260,12 @@ export function ReportsPage() {
           <CardHeader className="flex flex-row items-center gap-2 pb-2">
             <PieChart className="h-4 w-4 text-[#356AE6] dark:text-[#5B8CFF] shrink-0" />
             <div className="min-w-0">
-              <CardTitle className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6] truncate">Spending by Category</CardTitle>
-              <p className="text-[10px] text-[#475467] dark:text-[#B7C0CC] truncate">Proportional expenditure allocation (Click to view transactions)</p>
+              <CardTitle className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6] truncate">
+                Spending by Category
+              </CardTitle>
+              <p className="text-[10px] text-[#475467] dark:text-[#B7C0CC] truncate">
+                Proportional expenditure allocation (Click to view transactions)
+              </p>
             </div>
           </CardHeader>
           <CardContent className="pt-2 min-w-0">
@@ -307,8 +322,12 @@ export function ReportsPage() {
           <CardHeader className="flex flex-row items-center gap-2 pb-2">
             <BarChart3 className="h-4 w-4 text-[#356AE6] dark:text-[#5B8CFF] shrink-0" />
             <div className="min-w-0">
-              <CardTitle className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6] truncate">12-Month Financial Trend</CardTitle>
-              <p className="text-[10px] text-[#475467] dark:text-[#B7C0CC] truncate">Month-over-month cash flow cadence</p>
+              <CardTitle className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6] truncate">
+                12-Month Financial Trend
+              </CardTitle>
+              <p className="text-[10px] text-[#475467] dark:text-[#B7C0CC] truncate">
+                Month-over-month cash flow cadence
+              </p>
             </div>
           </CardHeader>
           <CardContent className="pt-2 min-w-0">
@@ -334,7 +353,10 @@ export function ReportsPage() {
                   </thead>
                   <tbody className="divide-y divide-[#D9E1EC]/40 dark:divide-[#2A313A] font-mono text-[11px]">
                     {monthlyTrend.map((row) => (
-                      <tr key={row.month} className="hover:bg-[#F6F8FB] dark:hover:bg-[#181D24] transition-colors">
+                      <tr
+                        key={row.month}
+                        className="hover:bg-[#F6F8FB] dark:hover:bg-[#181D24] transition-colors"
+                      >
                         <td className="px-3 py-2 font-sans font-semibold text-[#101828] dark:text-[#F3F4F6] text-xs whitespace-nowrap">
                           {row.month}
                         </td>
@@ -346,7 +368,9 @@ export function ReportsPage() {
                         </td>
                         <td
                           className={`px-3 py-2 text-right font-bold tabular-nums whitespace-nowrap ${
-                            row.net >= 0 ? 'text-[#101828] dark:text-[#F3F4F6]' : 'text-[#C53B4B] dark:text-[#F06B78]'
+                            row.net >= 0
+                              ? 'text-[#101828] dark:text-[#F3F4F6]'
+                              : 'text-[#C53B4B] dark:text-[#F06B78]'
                           }`}
                         >
                           {row.net >= 0 ? '+' : ''}

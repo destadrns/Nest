@@ -98,7 +98,7 @@ export function DashboardPage() {
   // Financial Computations
   const totalBalance = accounts.reduce((sum, a) => sum + a.balance, 0);
   const assetAccounts = accounts.filter((a) =>
-    ['CHECKING', 'SAVINGS', 'CASH', 'INVESTMENT'].includes(a.type)
+    ['CHECKING', 'SAVINGS', 'CASH', 'INVESTMENT'].includes(a.type),
   );
   const liabilityAccounts = accounts.filter((a) => ['CREDIT', 'LOAN'].includes(a.type));
   const totalAssets = assetAccounts.reduce((sum, a) => sum + a.balance, 0);
@@ -140,7 +140,7 @@ export function DashboardPage() {
   const maxChartVal = useMemo(() => {
     const max = Math.max(
       ...chartData.map((d: { income: number; expense: number }) => Math.max(d.income, d.expense)),
-      100000
+      100000,
     );
     return max;
   }, [chartData]);
@@ -157,7 +157,12 @@ export function DashboardPage() {
   // Progressive Onboarding checklist logic
   const setupSteps = [
     { id: 'acc', label: 'Add Household Account', done: accounts.length > 0, to: '/accounts' },
-    { id: 'tx', label: 'Record First Entry', done: transactions.length > 0, action: () => setShowQuickTxModal(true) },
+    {
+      id: 'tx',
+      label: 'Record First Entry',
+      done: transactions.length > 0,
+      action: () => setShowQuickTxModal(true),
+    },
     { id: 'bgt', label: 'Configure Budget Limit', done: budgets.length > 0, to: '/budgets' },
     { id: 'goal', label: 'Set Savings Goal', done: goals.length > 0, to: '/goals' },
   ];
@@ -192,7 +197,8 @@ export function DashboardPage() {
 
   const handleTransfer = async (e: FormEvent) => {
     e.preventDefault();
-    if (!transferForm.sourceAccountId || !transferForm.targetAccountId || !transferForm.amount) return;
+    if (!transferForm.sourceAccountId || !transferForm.targetAccountId || !transferForm.amount)
+      return;
     if (transferForm.sourceAccountId === transferForm.targetAccountId) return;
     const amountCents = Math.round(parseFloat(transferForm.amount) * 100);
 
@@ -316,7 +322,9 @@ export function DashboardPage() {
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6]">Household Setup Progress</span>
+                  <span className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6]">
+                    Household Setup Progress
+                  </span>
                   <Badge variant="info" size="sm" className="font-mono">
                     {completedSetupCount} of {setupSteps.length} complete
                   </Badge>
@@ -398,13 +406,17 @@ export function DashboardPage() {
             {/* Quick Balance Breakdown */}
             <div className="flex sm:flex-col items-start sm:items-end gap-3 sm:gap-2 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-[#D9E1EC]/60 dark:border-[#2A313A]/60">
               <div className="text-left sm:text-right">
-                <div className="text-[10px] uppercase font-bold text-[#98A2B3] dark:text-[#858F9D]">Total Assets</div>
+                <div className="text-[10px] uppercase font-bold text-[#98A2B3] dark:text-[#858F9D]">
+                  Total Assets
+                </div>
                 <div className="text-xs sm:text-sm font-bold text-[#0E8A73] dark:text-[#2BC7A4] font-mono">
                   {formatCurrency(totalAssets, globalCurrency)}
                 </div>
               </div>
               <div className="text-left sm:text-right">
-                <div className="text-[10px] uppercase font-bold text-[#98A2B3] dark:text-[#858F9D]">Total Liabilities</div>
+                <div className="text-[10px] uppercase font-bold text-[#98A2B3] dark:text-[#858F9D]">
+                  Total Liabilities
+                </div>
                 <div className="text-xs sm:text-sm font-bold text-[#C53B4B] dark:text-[#F06B78] font-mono">
                   {formatCurrency(totalLiabilities, globalCurrency)}
                 </div>
@@ -415,25 +427,36 @@ export function DashboardPage() {
           {/* Interactive Trajectory Ribbon */}
           <div className="mt-5 sm:mt-6 pt-4 border-t border-[#D9E1EC]/60 dark:border-[#2A313A]/60 grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
             <div className="rounded-xl bg-[#F6F8FB] dark:bg-[#181D24] p-2.5 sm:p-3 border border-[#D9E1EC]/50 dark:border-[#2A313A]/50 min-w-0">
-              <div className="text-[10px] uppercase font-bold text-[#98A2B3] dark:text-[#858F9D] truncate">Monthly Inflow</div>
+              <div className="text-[10px] uppercase font-bold text-[#98A2B3] dark:text-[#858F9D] truncate">
+                Monthly Inflow
+              </div>
               <div className="text-sm sm:text-base font-bold text-[#0E8A73] dark:text-[#2BC7A4] font-mono mt-0.5 truncate">
                 +{formatCurrency(mtdIncome, globalCurrency)}
               </div>
             </div>
             <div className="rounded-xl bg-[#F6F8FB] dark:bg-[#181D24] p-2.5 sm:p-3 border border-[#D9E1EC]/50 dark:border-[#2A313A]/50 min-w-0">
-              <div className="text-[10px] uppercase font-bold text-[#98A2B3] dark:text-[#858F9D] truncate">Monthly Outflow</div>
+              <div className="text-[10px] uppercase font-bold text-[#98A2B3] dark:text-[#858F9D] truncate">
+                Monthly Outflow
+              </div>
               <div className="text-sm sm:text-base font-bold text-[#C53B4B] dark:text-[#F06B78] font-mono mt-0.5 truncate">
                 -{formatCurrency(mtdExpense, globalCurrency)}
               </div>
             </div>
             <div className="rounded-xl bg-[#F6F8FB] dark:bg-[#181D24] p-2.5 sm:p-3 border border-[#D9E1EC]/50 dark:border-[#2A313A]/50 min-w-0">
-              <div className="text-[10px] uppercase font-bold text-[#98A2B3] dark:text-[#858F9D] truncate">Net Cash Flow</div>
-              <div className={`text-sm sm:text-base font-bold font-mono mt-0.5 truncate ${netCashFlow >= 0 ? 'text-[#0E8A73] dark:text-[#2BC7A4]' : 'text-[#C53B4B] dark:text-[#F06B78]'}`}>
-                {netCashFlow >= 0 ? '+' : ''}{formatCurrency(netCashFlow, globalCurrency)}
+              <div className="text-[10px] uppercase font-bold text-[#98A2B3] dark:text-[#858F9D] truncate">
+                Net Cash Flow
+              </div>
+              <div
+                className={`text-sm sm:text-base font-bold font-mono mt-0.5 truncate ${netCashFlow >= 0 ? 'text-[#0E8A73] dark:text-[#2BC7A4]' : 'text-[#C53B4B] dark:text-[#F06B78]'}`}
+              >
+                {netCashFlow >= 0 ? '+' : ''}
+                {formatCurrency(netCashFlow, globalCurrency)}
               </div>
             </div>
             <div className="rounded-xl bg-[#F6F8FB] dark:bg-[#181D24] p-2.5 sm:p-3 border border-[#D9E1EC]/50 dark:border-[#2A313A]/50 min-w-0">
-              <div className="text-[10px] uppercase font-bold text-[#98A2B3] dark:text-[#858F9D] truncate">Savings Rate</div>
+              <div className="text-[10px] uppercase font-bold text-[#98A2B3] dark:text-[#858F9D] truncate">
+                Savings Rate
+              </div>
               <div className="text-sm sm:text-base font-bold text-[#356AE6] dark:text-[#5B8CFF] font-mono mt-0.5 truncate">
                 {savingsRate}%
               </div>
@@ -458,8 +481,12 @@ export function DashboardPage() {
                     <ArrowDownLeft className="h-4 w-4" />
                   </div>
                   <div>
-                    <div className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6]">Total Income</div>
-                    <div className="text-[10px] text-[#98A2B3] dark:text-[#858F9D]">Recorded Inflows</div>
+                    <div className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6]">
+                      Total Income
+                    </div>
+                    <div className="text-[10px] text-[#98A2B3] dark:text-[#858F9D]">
+                      Recorded Inflows
+                    </div>
                   </div>
                 </div>
                 <div className="text-sm font-bold text-[#0E8A73] dark:text-[#2BC7A4] font-mono">
@@ -473,8 +500,12 @@ export function DashboardPage() {
                     <ArrowUpRight className="h-4 w-4" />
                   </div>
                   <div>
-                    <div className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6]">Total Expenses</div>
-                    <div className="text-[10px] text-[#98A2B3] dark:text-[#858F9D]">Categorized Outflows</div>
+                    <div className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6]">
+                      Total Expenses
+                    </div>
+                    <div className="text-[10px] text-[#98A2B3] dark:text-[#858F9D]">
+                      Categorized Outflows
+                    </div>
                   </div>
                 </div>
                 <div className="text-sm font-bold text-[#C53B4B] dark:text-[#F06B78] font-mono">
@@ -502,18 +533,26 @@ export function DashboardPage() {
         <div className="lg:col-span-8 rounded-2xl border border-[#D9E1EC] dark:border-[#2A313A] bg-white dark:bg-[#11151B] p-4 sm:p-5 shadow-sm space-y-4 min-w-0">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#D9E1EC]/60 dark:border-[#2A313A]/60 pb-3">
             <div>
-              <h3 className="text-sm font-bold text-[#101828] dark:text-[#F3F4F6]">Financial Activity</h3>
-              <p className="text-xs text-[#475467] dark:text-[#B7C0CC]">Monthly income vs expense breakdown</p>
+              <h3 className="text-sm font-bold text-[#101828] dark:text-[#F3F4F6]">
+                Financial Activity
+              </h3>
+              <p className="text-xs text-[#475467] dark:text-[#B7C0CC]">
+                Monthly income vs expense breakdown
+              </p>
             </div>
 
             <div className="flex items-center gap-3 text-xs">
               <div className="flex items-center gap-1.5">
                 <span className="h-2.5 w-2.5 rounded-sm bg-[#18B89A] dark:bg-[#2BC7A4]" />
-                <span className="text-[#475467] dark:text-[#B7C0CC] font-semibold text-[11px]">Income</span>
+                <span className="text-[#475467] dark:text-[#B7C0CC] font-semibold text-[11px]">
+                  Income
+                </span>
               </div>
               <div className="flex items-center gap-1.5">
                 <span className="h-2.5 w-2.5 rounded-sm bg-[#101828] dark:bg-[#5B8CFF]" />
-                <span className="text-[#475467] dark:text-[#B7C0CC] font-semibold text-[11px]">Expense</span>
+                <span className="text-[#475467] dark:text-[#B7C0CC] font-semibold text-[11px]">
+                  Expense
+                </span>
               </div>
             </div>
           </div>
@@ -537,8 +576,12 @@ export function DashboardPage() {
                     {isHovered && (
                       <div className="absolute -top-14 z-20 rounded-lg bg-[#101828] dark:bg-[#181D24] border border-transparent dark:border-[#2A313A] px-2.5 py-1.5 text-[10px] text-white dark:text-[#F3F4F6] shadow-lg pointer-events-none whitespace-nowrap">
                         <div className="font-bold">{d.label}</div>
-                        <div className="font-mono text-[#18B89A] dark:text-[#2BC7A4]">+{formatCurrency(d.income, globalCurrency)}</div>
-                        <div className="font-mono text-[#E05A67] dark:text-[#F06B78]">-{formatCurrency(d.expense, globalCurrency)}</div>
+                        <div className="font-mono text-[#18B89A] dark:text-[#2BC7A4]">
+                          +{formatCurrency(d.income, globalCurrency)}
+                        </div>
+                        <div className="font-mono text-[#E05A67] dark:text-[#F06B78]">
+                          -{formatCurrency(d.expense, globalCurrency)}
+                        </div>
                       </div>
                     )}
 
@@ -570,8 +613,12 @@ export function DashboardPage() {
           <div>
             <div className="flex items-center justify-between border-b border-[#D9E1EC]/60 dark:border-[#2A313A]/60 pb-3">
               <div>
-                <h3 className="text-sm font-bold text-[#101828] dark:text-[#F3F4F6]">Household Accounts</h3>
-                <p className="text-xs text-[#475467] dark:text-[#B7C0CC]">Click account to view activity</p>
+                <h3 className="text-sm font-bold text-[#101828] dark:text-[#F3F4F6]">
+                  Household Accounts
+                </h3>
+                <p className="text-xs text-[#475467] dark:text-[#B7C0CC]">
+                  Click account to view activity
+                </p>
               </div>
               <Link
                 to="/accounts"
@@ -607,7 +654,9 @@ export function DashboardPage() {
                         <div className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6] group-hover:text-[#356AE6] dark:group-hover:text-[#5B8CFF] transition-colors truncate">
                           {acc.name}
                         </div>
-                        <div className="text-[10px] text-[#98A2B3] dark:text-[#858F9D]">{acc.type}</div>
+                        <div className="text-[10px] text-[#98A2B3] dark:text-[#858F9D]">
+                          {acc.type}
+                        </div>
                       </div>
                     </div>
                     <div className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6] tabular-nums font-mono">
@@ -621,7 +670,9 @@ export function DashboardPage() {
 
           <div className="mt-4 pt-3 border-t border-[#D9E1EC]/60 dark:border-[#2A313A]/60 flex items-center justify-between text-xs font-semibold text-[#475467] dark:text-[#B7C0CC]">
             <span>Total Accounts</span>
-            <span className="font-mono font-bold text-[#101828] dark:text-[#F3F4F6]">{accounts.length} active</span>
+            <span className="font-mono font-bold text-[#101828] dark:text-[#F3F4F6]">
+              {accounts.length} active
+            </span>
           </div>
         </div>
       </div>
@@ -632,7 +683,9 @@ export function DashboardPage() {
         <div className="lg:col-span-8 rounded-2xl border border-[#D9E1EC] dark:border-[#2A313A] bg-white dark:bg-[#11151B] p-5 shadow-sm space-y-3">
           <div className="flex items-center justify-between border-b border-[#D9E1EC]/60 dark:border-[#2A313A]/60 pb-3">
             <div>
-              <h3 className="text-sm font-bold text-[#101828] dark:text-[#F3F4F6]">Recent Transactions</h3>
+              <h3 className="text-sm font-bold text-[#101828] dark:text-[#F3F4F6]">
+                Recent Transactions
+              </h3>
               <p className="text-xs text-[#475467] dark:text-[#B7C0CC]">
                 Click any record to inspect or manage details
               </p>
@@ -688,11 +741,15 @@ export function DashboardPage() {
                           {tx.description}
                         </div>
                         <div className="flex items-center gap-1.5 text-[10px] text-[#98A2B3] dark:text-[#858F9D] mt-0.5">
-                          <span className="font-medium text-[#475467] dark:text-[#B7C0CC]">{tx.category?.name || 'Uncategorized'}</span>
+                          <span className="font-medium text-[#475467] dark:text-[#B7C0CC]">
+                            {tx.category?.name || 'Uncategorized'}
+                          </span>
                           <span>•</span>
                           <span>{tx.account?.name || 'Account'}</span>
                           <span>•</span>
-                          <span className="font-mono">{new Date(tx.date).toLocaleDateString()}</span>
+                          <span className="font-mono">
+                            {new Date(tx.date).toLocaleDateString()}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -725,8 +782,12 @@ export function DashboardPage() {
           <div className="rounded-2xl border border-[#D9E1EC] dark:border-[#2A313A] bg-white dark:bg-[#11151B] p-5 shadow-sm space-y-3">
             <div className="flex items-center justify-between border-b border-[#D9E1EC]/60 dark:border-[#2A313A]/60 pb-3">
               <div>
-                <h3 className="text-sm font-bold text-[#101828] dark:text-[#F3F4F6]">Budget Overview</h3>
-                <p className="text-xs text-[#475467] dark:text-[#B7C0CC]">Monthly spending limits</p>
+                <h3 className="text-sm font-bold text-[#101828] dark:text-[#F3F4F6]">
+                  Budget Overview
+                </h3>
+                <p className="text-xs text-[#475467] dark:text-[#B7C0CC]">
+                  Monthly spending limits
+                </p>
               </div>
               <Link
                 to="/budgets"
@@ -765,7 +826,11 @@ export function DashboardPage() {
                         <div className="h-2 w-full overflow-hidden rounded-full bg-[#F0F4F8] dark:bg-[#181D24]">
                           <div
                             className={`h-full rounded-full transition-all duration-300 ${
-                              isOver ? 'bg-[#E05A67] dark:bg-[#F06B78]' : percent > 80 ? 'bg-[#E7A83B] dark:bg-[#E8B24A]' : 'bg-[#101828] dark:bg-[#5B8CFF]'
+                              isOver
+                                ? 'bg-[#E05A67] dark:bg-[#F06B78]'
+                                : percent > 80
+                                  ? 'bg-[#E7A83B] dark:bg-[#E8B24A]'
+                                  : 'bg-[#101828] dark:bg-[#5B8CFF]'
                             }`}
                             style={{ width: `${percent}%` }}
                           />
@@ -786,8 +851,12 @@ export function DashboardPage() {
           <div className="rounded-2xl border border-[#D9E1EC] dark:border-[#2A313A] bg-white dark:bg-[#11151B] p-5 shadow-sm space-y-3">
             <div className="flex items-center justify-between border-b border-[#D9E1EC]/60 dark:border-[#2A313A]/60 pb-3">
               <div>
-                <h3 className="text-sm font-bold text-[#101828] dark:text-[#F3F4F6]">Savings Goals</h3>
-                <p className="text-xs text-[#475467] dark:text-[#B7C0CC]">Track progress toward targets</p>
+                <h3 className="text-sm font-bold text-[#101828] dark:text-[#F3F4F6]">
+                  Savings Goals
+                </h3>
+                <p className="text-xs text-[#475467] dark:text-[#B7C0CC]">
+                  Track progress toward targets
+                </p>
               </div>
               <Link
                 to="/goals"
@@ -808,9 +877,14 @@ export function DashboardPage() {
                   {goals.slice(0, 3).map((goal) => {
                     const percent = goal.percentComplete ?? 0;
                     return (
-                      <div key={goal.id} className="space-y-1.5 p-2 rounded-lg bg-[#F6F8FB] dark:bg-[#181D24] border border-[#D9E1EC]/40 dark:border-[#2A313A]/40">
+                      <div
+                        key={goal.id}
+                        className="space-y-1.5 p-2 rounded-lg bg-[#F6F8FB] dark:bg-[#181D24] border border-[#D9E1EC]/40 dark:border-[#2A313A]/40"
+                      >
                         <div className="flex items-center justify-between text-xs">
-                          <span className="font-bold text-[#101828] dark:text-[#F3F4F6]">{goal.name}</span>
+                          <span className="font-bold text-[#101828] dark:text-[#F3F4F6]">
+                            {goal.name}
+                          </span>
                           <button
                             onClick={() => setContributeGoal(goal)}
                             className="text-[11px] font-bold text-[#356AE6] dark:text-[#5B8CFF] hover:underline flex items-center gap-0.5"
@@ -827,7 +901,9 @@ export function DashboardPage() {
                         </div>
                         <div className="flex justify-between text-[10px] text-[#475467] dark:text-[#B7C0CC] font-mono">
                           <span>{formatCurrency(goal.currentAmount || 0, globalCurrency)}</span>
-                          <span>{percent}% of {formatCurrency(goal.targetAmount, globalCurrency)}</span>
+                          <span>
+                            {percent}% of {formatCurrency(goal.targetAmount, globalCurrency)}
+                          </span>
                         </div>
                       </div>
                     );
@@ -846,10 +922,20 @@ export function DashboardPage() {
             <div>
               <div className="flex items-center justify-between border-b border-[#D9E1EC]/60 dark:border-[#2A313A]/60 pb-3">
                 <div className="flex items-center gap-2">
-                  <Badge variant={selectedTx.type === 'INCOME' ? 'income' : selectedTx.type === 'EXPENSE' ? 'expense' : 'info'}>
+                  <Badge
+                    variant={
+                      selectedTx.type === 'INCOME'
+                        ? 'income'
+                        : selectedTx.type === 'EXPENSE'
+                          ? 'expense'
+                          : 'info'
+                    }
+                  >
                     {selectedTx.type}
                   </Badge>
-                  <span className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6]">Transaction Details</span>
+                  <span className="text-xs font-bold text-[#101828] dark:text-[#F3F4F6]">
+                    Transaction Details
+                  </span>
                 </div>
                 <button
                   onClick={() => setSelectedTx(null)}
@@ -861,10 +947,18 @@ export function DashboardPage() {
 
               <div className="mt-4 sm:mt-5 space-y-4">
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-[#98A2B3] dark:text-[#858F9D]">Amount</span>
-                  <div className={`text-2xl sm:text-3xl font-extrabold font-mono tabular-nums mt-0.5 ${
-                    selectedTx.type === 'INCOME' ? 'text-[#0E8A73] dark:text-[#2BC7A4]' : selectedTx.type === 'EXPENSE' ? 'text-[#C53B4B] dark:text-[#F06B78]' : 'text-[#101828] dark:text-[#F3F4F6]'
-                  }`}>
+                  <span className="text-[10px] uppercase font-bold text-[#98A2B3] dark:text-[#858F9D]">
+                    Amount
+                  </span>
+                  <div
+                    className={`text-2xl sm:text-3xl font-extrabold font-mono tabular-nums mt-0.5 ${
+                      selectedTx.type === 'INCOME'
+                        ? 'text-[#0E8A73] dark:text-[#2BC7A4]'
+                        : selectedTx.type === 'EXPENSE'
+                          ? 'text-[#C53B4B] dark:text-[#F06B78]'
+                          : 'text-[#101828] dark:text-[#F3F4F6]'
+                    }`}
+                  >
                     {selectedTx.type === 'EXPENSE' ? '-' : selectedTx.type === 'INCOME' ? '+' : ''}
                     {formatCurrency(selectedTx.amount, globalCurrency)}
                   </div>
@@ -873,19 +967,27 @@ export function DashboardPage() {
                 <div className="rounded-xl border border-[#D9E1EC] dark:border-[#2A313A] bg-[#F6F8FB] dark:bg-[#181D24] p-3.5 space-y-2.5 text-xs">
                   <div className="flex justify-between">
                     <span className="text-[#475467] dark:text-[#B7C0CC]">Description</span>
-                    <strong className="text-[#101828] dark:text-[#F3F4F6] text-right truncate max-w-50">{selectedTx.description}</strong>
+                    <strong className="text-[#101828] dark:text-[#F3F4F6] text-right truncate max-w-50">
+                      {selectedTx.description}
+                    </strong>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-[#475467] dark:text-[#B7C0CC]">Category</span>
-                    <strong className="text-[#101828] dark:text-[#F3F4F6]">{selectedTx.category?.name || 'Uncategorized'}</strong>
+                    <strong className="text-[#101828] dark:text-[#F3F4F6]">
+                      {selectedTx.category?.name || 'Uncategorized'}
+                    </strong>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-[#475467] dark:text-[#B7C0CC]">Account</span>
-                    <strong className="text-[#101828] dark:text-[#F3F4F6]">{selectedTx.account?.name || 'Account'}</strong>
+                    <strong className="text-[#101828] dark:text-[#F3F4F6]">
+                      {selectedTx.account?.name || 'Account'}
+                    </strong>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-[#475467] dark:text-[#B7C0CC]">Date</span>
-                    <strong className="font-mono text-[#101828] dark:text-[#F3F4F6]">{new Date(selectedTx.date).toLocaleDateString()}</strong>
+                    <strong className="font-mono text-[#101828] dark:text-[#F3F4F6]">
+                      {new Date(selectedTx.date).toLocaleDateString()}
+                    </strong>
                   </div>
                 </div>
 
@@ -935,7 +1037,9 @@ export function DashboardPage() {
                   <div className="flex h-6 w-6 items-center justify-center rounded bg-[#F0F4F8] dark:bg-[#181D24] text-[#101828] dark:text-[#F3F4F6]">
                     <Building className="h-3.5 w-3.5" />
                   </div>
-                  <h3 className="text-sm font-bold text-[#101828] dark:text-[#F3F4F6] truncate max-w-55">{selectedAccount.name}</h3>
+                  <h3 className="text-sm font-bold text-[#101828] dark:text-[#F3F4F6] truncate max-w-55">
+                    {selectedAccount.name}
+                  </h3>
                 </div>
                 <button
                   onClick={() => setSelectedAccount(null)}
@@ -947,20 +1051,29 @@ export function DashboardPage() {
 
               <div className="mt-4 sm:mt-5 space-y-4">
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-[#98A2B3] dark:text-[#858F9D]">Current Balance</span>
+                  <span className="text-[10px] uppercase font-bold text-[#98A2B3] dark:text-[#858F9D]">
+                    Current Balance
+                  </span>
                   <div className="text-2xl sm:text-3xl font-extrabold font-mono text-[#101828] dark:text-[#F3F4F6] tabular-nums mt-0.5">
-                    {formatCurrency(selectedAccount.balance, selectedAccount.currency || globalCurrency)}
+                    {formatCurrency(
+                      selectedAccount.balance,
+                      selectedAccount.currency || globalCurrency,
+                    )}
                   </div>
                 </div>
 
                 <div className="rounded-xl border border-[#D9E1EC] dark:border-[#2A313A] bg-[#F6F8FB] dark:bg-[#181D24] p-3.5 space-y-2.5 text-xs">
                   <div className="flex justify-between">
                     <span className="text-[#475467] dark:text-[#B7C0CC]">Account Type</span>
-                    <strong className="text-[#101828] dark:text-[#F3F4F6]">{selectedAccount.type}</strong>
+                    <strong className="text-[#101828] dark:text-[#F3F4F6]">
+                      {selectedAccount.type}
+                    </strong>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-[#475467] dark:text-[#B7C0CC]">Currency</span>
-                    <strong className="font-mono text-[#101828] dark:text-[#F3F4F6]">{selectedAccount.currency || globalCurrency}</strong>
+                    <strong className="font-mono text-[#101828] dark:text-[#F3F4F6]">
+                      {selectedAccount.currency || globalCurrency}
+                    </strong>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-[#475467] dark:text-[#B7C0CC]">Status</span>
@@ -1072,7 +1185,9 @@ export function DashboardPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">Description</label>
+                <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">
+                  Description
+                </label>
                 <Input
                   required
                   value={txForm.description}
@@ -1084,7 +1199,9 @@ export function DashboardPage() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">Account</label>
+                  <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">
+                    Account
+                  </label>
                   <select
                     value={txForm.accountId}
                     onChange={(e) => setTxForm((f) => ({ ...f, accountId: e.target.value }))}
@@ -1101,7 +1218,9 @@ export function DashboardPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">Category</label>
+                  <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">
+                    Category
+                  </label>
                   <select
                     value={txForm.categoryId}
                     onChange={(e) => setTxForm((f) => ({ ...f, categoryId: e.target.value }))}
@@ -1148,7 +1267,9 @@ export function DashboardPage() {
             <div className="flex items-center justify-between border-b border-[#D9E1EC]/60 dark:border-[#2A313A]/60 pb-3">
               <div className="flex items-center gap-2">
                 <ArrowLeftRight className="h-4 w-4 text-[#356AE6] dark:text-[#5B8CFF]" />
-                <h3 className="text-sm font-bold text-[#101828] dark:text-[#F3F4F6]">Transfer Funds</h3>
+                <h3 className="text-sm font-bold text-[#101828] dark:text-[#F3F4F6]">
+                  Transfer Funds
+                </h3>
               </div>
               <button
                 onClick={() => setShowTransferModal(false)}
@@ -1161,10 +1282,14 @@ export function DashboardPage() {
             <form onSubmit={handleTransfer} className="mt-4 space-y-3.5">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">From Account</label>
+                  <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">
+                    From Account
+                  </label>
                   <select
                     value={transferForm.sourceAccountId}
-                    onChange={(e) => setTransferForm((f) => ({ ...f, sourceAccountId: e.target.value }))}
+                    onChange={(e) =>
+                      setTransferForm((f) => ({ ...f, sourceAccountId: e.target.value }))
+                    }
                     className="w-full rounded-lg border border-[#D9E1EC] dark:border-[#2A313A] bg-white dark:bg-[#11151B] px-3 py-1.5 text-xs text-[#101828] dark:text-[#F3F4F6] shadow-2xs focus:border-[#101828] dark:focus:border-[#5B8CFF] focus:outline-none"
                     required
                   >
@@ -1178,16 +1303,24 @@ export function DashboardPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">To Account</label>
+                  <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">
+                    To Account
+                  </label>
                   <select
                     value={transferForm.targetAccountId}
-                    onChange={(e) => setTransferForm((f) => ({ ...f, targetAccountId: e.target.value }))}
+                    onChange={(e) =>
+                      setTransferForm((f) => ({ ...f, targetAccountId: e.target.value }))
+                    }
                     className="w-full rounded-lg border border-[#D9E1EC] dark:border-[#2A313A] bg-white dark:bg-[#11151B] px-3 py-1.5 text-xs text-[#101828] dark:text-[#F3F4F6] shadow-2xs focus:border-[#101828] dark:focus:border-[#5B8CFF] focus:outline-none"
                     required
                   >
                     <option value="">Select Target</option>
                     {accounts.map((a) => (
-                      <option key={a.id} value={a.id} disabled={a.id === transferForm.sourceAccountId}>
+                      <option
+                        key={a.id}
+                        value={a.id}
+                        disabled={a.id === transferForm.sourceAccountId}
+                      >
                         {a.name} ({formatCurrency(a.balance, a.currency || globalCurrency)})
                       </option>
                     ))}
@@ -1212,7 +1345,9 @@ export function DashboardPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">Description / Memo</label>
+                <label className="block text-xs font-semibold text-[#101828] dark:text-[#F3F4F6] mb-1">
+                  Description / Memo
+                </label>
                 <Input
                   value={transferForm.description}
                   onChange={(e) => setTransferForm((f) => ({ ...f, description: e.target.value }))}
@@ -1234,7 +1369,11 @@ export function DashboardPage() {
                   type="submit"
                   size="sm"
                   isLoading={createTx.isPending}
-                  disabled={!transferForm.sourceAccountId || !transferForm.targetAccountId || !transferForm.amount}
+                  disabled={
+                    !transferForm.sourceAccountId ||
+                    !transferForm.targetAccountId ||
+                    !transferForm.amount
+                  }
                   className="bg-[#101828] dark:bg-[#F3F4F6] dark:text-[#0A0D12]"
                 >
                   Execute Transfer
@@ -1275,16 +1414,27 @@ function GoalContributeModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#101828]/50 dark:bg-black/70 backdrop-blur-xs p-4">
       <div className="animate-modal-pop w-full max-w-sm rounded-2xl border border-[#D9E1EC] dark:border-[#2A313A] bg-white dark:bg-[#11151B] p-6 shadow-2xl">
         <div className="flex items-center justify-between border-b border-[#D9E1EC]/60 dark:border-[#2A313A]/60 pb-3">
-          <h3 className="text-sm font-bold text-[#101828] dark:text-[#F3F4F6]">Contribute to {goal.name}</h3>
-          <button onClick={onClose} className="btn-tactile rounded-md p-1 text-[#98A2B3] dark:text-[#858F9D] hover:bg-[#F0F4F8] dark:hover:bg-[#181D24]">
+          <h3 className="text-sm font-bold text-[#101828] dark:text-[#F3F4F6]">
+            Contribute to {goal.name}
+          </h3>
+          <button
+            onClick={onClose}
+            className="btn-tactile rounded-md p-1 text-[#98A2B3] dark:text-[#858F9D] hover:bg-[#F0F4F8] dark:hover:bg-[#181D24]"
+          >
             <X className="h-4 w-4" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="mt-4 space-y-3.5">
           <div className="rounded-lg bg-[#F6F8FB] dark:bg-[#181D24] p-2.5 text-xs text-[#475467] dark:text-[#B7C0CC]">
-            Currently saved: <strong className="font-mono text-[#101828] dark:text-[#F3F4F6]">{formatCurrency(goal.currentAmount || 0, currency)}</strong> of{' '}
-            <strong className="font-mono text-[#101828] dark:text-[#F3F4F6]">{formatCurrency(goal.targetAmount, currency)}</strong>
+            Currently saved:{' '}
+            <strong className="font-mono text-[#101828] dark:text-[#F3F4F6]">
+              {formatCurrency(goal.currentAmount || 0, currency)}
+            </strong>{' '}
+            of{' '}
+            <strong className="font-mono text-[#101828] dark:text-[#F3F4F6]">
+              {formatCurrency(goal.targetAmount, currency)}
+            </strong>
           </div>
 
           <div>

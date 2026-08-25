@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  NotFoundException,
-  Logger,
-} from '@nestjs/common';
+import { Injectable, NotFoundException, Logger } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { AuditService } from '../audit/audit.service';
 import { CreateBudgetDto, UpdateBudgetDto } from './dto';
@@ -171,9 +167,7 @@ export class BudgetService {
       _sum: { amount: true },
     });
 
-    const spendingMap = new Map(
-      spending.map((s) => [s.categoryId, Number(s._sum.amount ?? 0n)]),
-    );
+    const spendingMap = new Map(spending.map((s) => [s.categoryId, Number(s._sum.amount ?? 0n)]));
 
     const totalSpent = spending.reduce((sum, s) => sum + Number(s._sum.amount ?? 0n), 0);
     const budgetAmount = Number(budget.amount);

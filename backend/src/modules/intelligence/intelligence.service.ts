@@ -55,13 +55,22 @@ export class IntelligenceService {
 
     // Keyword heuristics
     const keywords: Record<string, string[]> = {
-      'Groceries': ['market', 'supermarket', 'walmart', 'trader', 'costco', 'grocery', 'food'],
+      Groceries: ['market', 'supermarket', 'walmart', 'trader', 'costco', 'grocery', 'food'],
       'Dining Out': ['restaurant', 'cafe', 'coffee', 'starbucks', 'mcdonalds', 'pizza', 'burger'],
-      'Utilities': ['electric', 'water', 'gas', 'power', 'internet', 'verizon', 'comcast'],
-      'Transportation': ['uber', 'lyft', 'shell', 'chevron', 'gasoline', 'metro', 'transit', 'parking'],
-      'Housing': ['rent', 'mortgage', 'hoa', 'realty'],
-      'Entertainment': ['netflix', 'spotify', 'cinema', 'theatre', 'apple', 'steam', 'game'],
-      'Healthcare': ['pharmacy', 'cvs', 'walgreens', 'clinic', 'hospital', 'doctor', 'dental'],
+      Utilities: ['electric', 'water', 'gas', 'power', 'internet', 'verizon', 'comcast'],
+      Transportation: [
+        'uber',
+        'lyft',
+        'shell',
+        'chevron',
+        'gasoline',
+        'metro',
+        'transit',
+        'parking',
+      ],
+      Housing: ['rent', 'mortgage', 'hoa', 'realty'],
+      Entertainment: ['netflix', 'spotify', 'cinema', 'theatre', 'apple', 'steam', 'game'],
+      Healthcare: ['pharmacy', 'cvs', 'walgreens', 'clinic', 'hospital', 'doctor', 'dental'],
     };
 
     for (const [catName, words] of Object.entries(keywords)) {
@@ -188,7 +197,9 @@ export class IntelligenceService {
       predictedMonthlyExpense: avgMonthlyExpense,
       expectedYearEndSavings: Math.max(0, avgMonthlyExpense * 2), // projected buffer
       confidenceScore: Math.min(95, 60 + expenseValues.length * 5),
-      nextMonthPredictionsByCategory: categoryPredictions.sort((a, b) => b.predictedAmount - a.predictedAmount),
+      nextMonthPredictionsByCategory: categoryPredictions.sort(
+        (a, b) => b.predictedAmount - a.predictedAmount,
+      ),
     };
   }
 }

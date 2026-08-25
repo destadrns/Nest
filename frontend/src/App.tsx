@@ -29,7 +29,8 @@ export function App() {
   const location = useLocation();
 
   useEffect(() => {
-    const title = ROUTE_TITLES[location.pathname] || 'NEST — Network for Everyday Spending & Tracking';
+    const title =
+      ROUTE_TITLES[location.pathname] || 'NEST — Network for Everyday Spending & Tracking';
     document.title = title;
   }, [location.pathname]);
 
@@ -83,7 +84,9 @@ function PlaceholderPage({ title }: { title: string }) {
     <div className="flex min-h-[50vh] items-center justify-center">
       <div className="text-center">
         <h1 className="text-xl font-bold text-[#101828] dark:text-[#F3F4F6]">{title}</h1>
-        <p className="mt-1 text-xs text-[#475467] dark:text-[#B7C0CC]">NEST workspace module under development</p>
+        <p className="mt-1 text-xs text-[#475467] dark:text-[#B7C0CC]">
+          NEST workspace module under development
+        </p>
       </div>
     </div>
   );
@@ -93,8 +96,12 @@ function NotFound() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-[#F6F8FB] dark:bg-[#0A0D12] px-4 transition-colors duration-200">
       <div className="text-center">
-        <h1 className="text-5xl font-extrabold text-[#101828] dark:text-[#F3F4F6] tracking-tight">404</h1>
-        <p className="mt-2 text-xs font-semibold text-[#475467] dark:text-[#B7C0CC]">Resource not found in NEST workspace</p>
+        <h1 className="text-5xl font-extrabold text-[#101828] dark:text-[#F3F4F6] tracking-tight">
+          404
+        </h1>
+        <p className="mt-2 text-xs font-semibold text-[#475467] dark:text-[#B7C0CC]">
+          Resource not found in NEST workspace
+        </p>
         <a
           href="/"
           className="mt-4 inline-flex items-center justify-center rounded-lg bg-[#101828] dark:bg-[#F3F4F6] px-4 py-2 text-xs font-bold text-white dark:text-[#0A0D12] shadow-xs hover:bg-[#1E293B] dark:hover:bg-[#E5E7EB] transition"

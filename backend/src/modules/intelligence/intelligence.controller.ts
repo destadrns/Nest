@@ -20,10 +20,7 @@ export class IntelligenceController {
     @Param('familyId') familyId: string,
     @Query('description') description: string,
   ) {
-    const suggestion = await this.intelligenceService.suggestCategory(
-      familyId,
-      description || '',
-    );
+    const suggestion = await this.intelligenceService.suggestCategory(familyId, description || '');
     return { data: suggestion };
   }
 

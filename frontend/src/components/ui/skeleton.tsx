@@ -6,7 +6,10 @@ type SkeletonProps = HTMLAttributes<HTMLDivElement>;
 export function Skeleton({ className, ...props }: SkeletonProps) {
   return (
     <div
-      className={cn('rounded-md bg-[#D9E1EC]/50 dark:bg-[#181D24] animate-shimmer-smooth', className)}
+      className={cn(
+        'rounded-md bg-[#D9E1EC]/50 dark:bg-[#181D24] animate-shimmer-smooth',
+        className,
+      )}
       {...props}
     />
   );

@@ -37,7 +37,8 @@ export interface FamilyMember {
   };
 }
 
-export type AccountType = 'CHECKING' | 'SAVINGS' | 'CREDIT' | 'CASH' | 'INVESTMENT' | 'LOAN' | 'OTHER';
+export type AccountType =
+  'CHECKING' | 'SAVINGS' | 'CREDIT' | 'CASH' | 'INVESTMENT' | 'LOAN' | 'OTHER';
 
 export interface Account {
   id: string;
