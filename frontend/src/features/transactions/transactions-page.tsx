@@ -365,7 +365,6 @@ export function TransactionsPage() {
                       key={tx.id}
                       onClick={() => {
                         setSelectedTx(tx);
-                        setIsEditingTx(false);
                       }}
                       className={`hover:bg-[#F6F8FB] dark:hover:bg-[#181D24] transition-colors cursor-pointer ${
                         isSelected ? 'bg-[#EEF4FE]/50 dark:bg-[#5B8CFF]/15' : ''

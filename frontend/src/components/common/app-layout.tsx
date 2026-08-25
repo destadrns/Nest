@@ -117,9 +117,6 @@ export function AppLayout() {
       if (currencyRef.current && !currencyRef.current.contains(event.target as Node)) {
         setCurrencyDropdownOpen(false);
       }
-      if (themeRef.current && !themeRef.current.contains(event.target as Node)) {
-        setThemeDropdownOpen(false);
-      }
     }
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
