@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { ConfigService } from '@nestjs/config';
 import { PasswordService } from './password.service';
 
 describe('PasswordService', () => {
@@ -6,7 +7,20 @@ describe('PasswordService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [PasswordService],
+      providers: [
+        PasswordService,
+        {
+          provide: ConfigService,
+          useValue: {
+            get: jest.fn((key: string) => {
+              if (key === 'ARGON2_MEMORY') return 65536;
+              if (key === 'ARGON2_ITERATIONS') return 3;
+              if (key === 'ARGON2_PARALLELISM') return 4;
+              return null;
+            }),
+          },
+        },
+      ],
     }).compile();
 
     service = module.get<PasswordService>(PasswordService);
