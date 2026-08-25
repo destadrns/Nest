@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { AuditService } from '../audit/audit.service';
-import { ImportTransactionsDto, CsvTransactionRowDto } from './dto/data-portability.dto';
+import { ImportTransactionsDto } from './dto/data-portability.dto';
 import { TransactionType } from '@prisma/client';
 
 @Injectable()

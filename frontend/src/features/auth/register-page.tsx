@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useRegister } from '@/hooks/use-auth';
 import { useAppStore } from '@/stores/app-store';
@@ -30,10 +30,10 @@ export function RegisterPage() {
   const theme = useAppStore((s) => s.theme);
   const setTheme = useAppStore((s) => s.setTheme);
 
-  const set = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) =>
+  const set = (field: string) => (e: ChangeEvent<HTMLInputElement>) =>
     setForm((f) => ({ ...f, [field]: e.target.value }));
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError('');
 
@@ -42,7 +42,7 @@ export function RegisterPage() {
       return;
     }
 
-    const specialCharRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+    const specialCharRegex = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/;
     if (
       form.password.length < 8 ||
       !specialCharRegex.test(form.password) ||
@@ -73,7 +73,7 @@ export function RegisterPage() {
   const hasUpper = /[A-Z]/.test(form.password);
   const hasLower = /[a-z]/.test(form.password);
   const hasDigit = /\d/.test(form.password);
-  const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(form.password);
+  const hasSpecial = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(form.password);
 
   return (
     <main className="relative flex min-h-dvh w-full flex-col justify-between overflow-x-hidden bg-[#F6F8FB] dark:bg-[#0A0D12] text-[#101828] dark:text-[#F3F4F6] select-none transition-colors duration-200">

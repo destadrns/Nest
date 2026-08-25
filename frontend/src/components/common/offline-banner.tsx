@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useNetworkStatus } from '@/hooks/use-network-status';
 import { getQueuedTransactions, removeQueuedTransaction } from '@/lib/offline-queue';
 import { api } from '@/lib/api';
@@ -10,24 +10,12 @@ export function OfflineBanner() {
   const [isSyncing, setIsSyncing] = useState(false);
   const [syncSuccess, setSyncSuccess] = useState(false);
 
-  const checkQueue = async () => {
+  const checkQueue = useCallback(async () => {
     const queue = await getQueuedTransactions();
     setQueueCount(queue.length);
-  };
-
-  useEffect(() => {
-    checkQueue();
-    const interval = setInterval(checkQueue, 5000);
-    return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    if (isOnline && queueCount > 0 && !isSyncing) {
-      syncPendingTransactions();
-    }
-  }, [isOnline, queueCount]);
-
-  const syncPendingTransactions = async () => {
+  const syncPendingTransactions = useCallback(async () => {
     setIsSyncing(true);
     try {
       const items = await getQueuedTransactions();
@@ -43,7 +31,19 @@ export function OfflineBanner() {
     } finally {
       setIsSyncing(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    checkQueue();
+    const interval = setInterval(checkQueue, 5000);
+    return () => clearInterval(interval);
+  }, [checkQueue]);
+
+  useEffect(() => {
+    if (isOnline && queueCount > 0 && !isSyncing) {
+      syncPendingTransactions();
+    }
+  }, [isOnline, queueCount, isSyncing, syncPendingTransactions]);
 
   if (isOnline && queueCount === 0 && !syncSuccess) {
     return null;

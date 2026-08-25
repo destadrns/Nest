@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppStore } from '@/stores/app-store';
 import { useAccounts } from '@/hooks/use-accounts';
@@ -165,7 +165,7 @@ export function DashboardPage() {
   const allSetupCompleted = completedSetupCount === setupSteps.length;
 
   // Form Handlers
-  const handleQuickAdd = async (e: React.FormEvent) => {
+  const handleQuickAdd = async (e: FormEvent) => {
     e.preventDefault();
     if (!txForm.accountId || !txForm.amount || !txForm.description) return;
     const amountCents = Math.round(parseFloat(txForm.amount) * 100);
@@ -190,7 +190,7 @@ export function DashboardPage() {
     });
   };
 
-  const handleTransfer = async (e: React.FormEvent) => {
+  const handleTransfer = async (e: FormEvent) => {
     e.preventDefault();
     if (!transferForm.sourceAccountId || !transferForm.targetAccountId || !transferForm.amount) return;
     if (transferForm.sourceAccountId === transferForm.targetAccountId) return;
@@ -1262,7 +1262,7 @@ function GoalContributeModal({
   const [amount, setAmount] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const cents = Math.round(parseFloat(amount) * 100);
     if (isNaN(cents) || cents <= 0) return;

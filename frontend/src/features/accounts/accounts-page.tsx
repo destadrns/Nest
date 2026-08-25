@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '@/stores/app-store';
 import { useAccounts, useCreateAccount, useUpdateAccount } from '@/hooks/use-accounts';
@@ -300,7 +300,7 @@ function AccountDetailDrawer({
   });
   const recentTransactions = txRes?.data ?? [];
 
-  const handleSave = async (e: React.FormEvent) => {
+  const handleSave = async (e: FormEvent) => {
     e.preventDefault();
     await updateAccount.mutateAsync({
       id: account.id,
@@ -505,7 +505,7 @@ function CreateAccountModal({
   const [error, setError] = useState('');
   const createAccount = useCreateAccount(familyId);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError('');
     try {
@@ -629,7 +629,7 @@ function QuickTransferModal({
   const [description, setDescription] = useState('Account Transfer');
   const [error, setError] = useState('');
 
-  const handleTransfer = async (e: React.FormEvent) => {
+  const handleTransfer = async (e: FormEvent) => {
     e.preventDefault();
     setError('');
 

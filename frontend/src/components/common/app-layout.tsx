@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, type FormEvent } from 'react';
 import { NavLink, useNavigate, Outlet, useLocation } from 'react-router-dom';
 import { useLogout } from '@/hooks/use-auth';
 import { useFamilies, useCreateFamily } from '@/hooks/use-family';
@@ -127,7 +127,7 @@ export function AppLayout() {
     navigate('/login');
   };
 
-  const handleCreateFamily = async (e: React.FormEvent) => {
+  const handleCreateFamily = async (e: FormEvent) => {
     e.preventDefault();
     if (!familyName.trim()) return;
     const res = await createFamily.mutateAsync({ name: familyName.trim() });
@@ -816,7 +816,7 @@ function GlobalQuickTransactionModal({
   const createTx = useCreateTransaction(familyId);
   const accounts = accountsRes?.data ?? [];
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError('');
 

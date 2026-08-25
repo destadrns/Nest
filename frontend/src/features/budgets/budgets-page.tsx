@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '@/stores/app-store';
 import { useBudgets, useCreateBudget, useDeleteBudget } from '@/hooks/use-budgets';
@@ -299,7 +299,7 @@ function CreateBudgetModal({
   const [startDate, setStartDate] = useState(new Date().toISOString().slice(0, 10));
   const [error, setError] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError('');
 

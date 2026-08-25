@@ -14,6 +14,7 @@ export function useSession() {
         setUser(res.data.user);
         return res.data;
       } catch {
+        // No active session or unauthenticated request
         setUser(null);
         return null;
       }

@@ -1,7 +1,8 @@
+import type { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useSession } from '@/hooks/use-auth';
 
-export function ProtectedRoute({ children }: { children: React.ReactNode }) {
+export function ProtectedRoute({ children }: { children: ReactNode }) {
   const { data: session, isLoading } = useSession();
 
   if (isLoading) {
@@ -19,7 +20,7 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
-export function PublicRoute({ children }: { children: React.ReactNode }) {
+export function PublicRoute({ children }: { children: ReactNode }) {
   const { data: session, isLoading } = useSession();
 
   if (isLoading) {

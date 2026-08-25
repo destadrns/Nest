@@ -30,7 +30,9 @@ function getInitialTheme(): ThemePreference {
   try {
     const saved = localStorage.getItem('nest_theme') as ThemePreference;
     if (saved === 'light' || saved === 'dark') return saved;
-  } catch {}
+  } catch {
+    // LocalStorage inaccessible in sandbox or private browsing
+  }
   return 'light';
 }
 
@@ -38,7 +40,9 @@ function getInitialCurrency(): CurrencyPreference {
   try {
     const saved = localStorage.getItem('nest_currency') as CurrencyPreference;
     if (saved === 'IDR' || saved === 'USD') return saved;
-  } catch {}
+  } catch {
+    // LocalStorage inaccessible in sandbox or private browsing
+  }
   return 'IDR';
 }
 
@@ -81,7 +85,9 @@ export const useAppStore = create<AppState>((set) => ({
   setTheme: (theme) => {
     try {
       localStorage.setItem('nest_theme', theme);
-    } catch {}
+    } catch {
+      // LocalStorage inaccessible
+    }
     applyTheme(theme);
     set({ theme });
   },
@@ -90,7 +96,9 @@ export const useAppStore = create<AppState>((set) => ({
   setCurrency: (currency) => {
     try {
       localStorage.setItem('nest_currency', currency);
-    } catch {}
+    } catch {
+      // LocalStorage inaccessible
+    }
     set({ currency });
   },
 }));

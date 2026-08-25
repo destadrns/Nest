@@ -73,6 +73,7 @@ export async function getQueuedTransactions(): Promise<QueuedTransaction[]> {
       req.onerror = () => reject(req.error);
     });
   } catch {
+    // Database access failed or unavailable in non-browser context
     return [];
   }
 }

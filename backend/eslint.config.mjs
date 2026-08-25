@@ -25,6 +25,7 @@ export default [
       '@typescript-eslint': tsPlugin,
     },
     rules: {
+      ...tsPlugin.configs['eslint-recommended'].rules,
       ...tsPlugin.configs.recommended.rules,
       '@typescript-eslint/interface-name-prefix': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',

@@ -211,7 +211,7 @@ export class FamilyService {
 
     if (!member) throw new NotFoundException('Member not found');
     if (member.role === FamilyRole.OWNER) {
-      throw new ForbiddenException('Cannot change the owner\'s role');
+      throw new ForbiddenException("Cannot change the owner's role");
     }
 
     const updated = await this.prisma.familyMember.update({

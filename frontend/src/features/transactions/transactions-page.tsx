@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type FormEvent, type MouseEvent } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useAppStore } from '@/stores/app-store';
 import {
@@ -105,7 +105,7 @@ export function TransactionsPage() {
     }
   };
 
-  const toggleSelectTx = (id: string, e: React.MouseEvent) => {
+  const toggleSelectTx = (id: string, e: MouseEvent) => {
     e.stopPropagation();
     setSelectedTxIds((prev) =>
       prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
@@ -131,7 +131,7 @@ export function TransactionsPage() {
     }
   };
 
-  const handleBulkCategorize = async (e: React.FormEvent) => {
+  const handleBulkCategorize = async (e: FormEvent) => {
     e.preventDefault();
     if (!batchCategoryId) return;
     setIsBatchProcessing(true);
@@ -637,7 +637,7 @@ function TransactionDetailDrawer({
   const [categoryId, setCategoryId] = useState(tx.categoryId || '');
   const [saving, setSaving] = useState(false);
 
-  const handleSave = async (e: React.FormEvent) => {
+  const handleSave = async (e: FormEvent) => {
     e.preventDefault();
     setSaving(true);
     await onUpdate({
@@ -816,7 +816,7 @@ function CreateTransactionModal({
   const createTx = useCreateTransaction(familyId);
   const accounts = accountsRes?.data ?? [];
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError('');
 

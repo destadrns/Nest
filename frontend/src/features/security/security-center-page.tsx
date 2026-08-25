@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 import {
   useSecuritySummary,
   useStartMfa,
@@ -69,7 +69,7 @@ export function SecurityCenterPage() {
     }
   };
 
-  const handleVerifyEnableMfa = async (e: React.FormEvent) => {
+  const handleVerifyEnableMfa = async (e: FormEvent) => {
     e.preventDefault();
     if (!setupData) return;
     setErrorMsg('');
@@ -88,7 +88,7 @@ export function SecurityCenterPage() {
     }
   };
 
-  const handleDisableMfa = async (e: React.FormEvent) => {
+  const handleDisableMfa = async (e: FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
     setSuccessMsg('');

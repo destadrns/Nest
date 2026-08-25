@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 import { useAppStore } from '@/stores/app-store';
 import { useGoals, useCreateGoal, useUpdateGoal, useDeleteGoal } from '@/hooks/use-goals';
 import type { FinancialGoal } from '@/types';
@@ -179,7 +179,7 @@ function GoalCard({ goal, familyId, currency }: { goal: FinancialGoal; familyId:
   const percent = goal.percentComplete ?? 0;
   const isCompleted = goal.status === 'COMPLETED' || percent >= 100;
 
-  const handleAddFunds = async (e: React.FormEvent) => {
+  const handleAddFunds = async (e: FormEvent) => {
     e.preventDefault();
     const cents = Math.round(parseFloat(addAmount) * 100);
     if (isNaN(cents) || cents <= 0) return;
@@ -192,7 +192,7 @@ function GoalCard({ goal, familyId, currency }: { goal: FinancialGoal; familyId:
     setShowAddMoney(false);
   };
 
-  const handleSaveEdit = async (e: React.FormEvent) => {
+  const handleSaveEdit = async (e: FormEvent) => {
     e.preventDefault();
     const targetCents = Math.round(parseFloat(targetAmount) * 100);
     if (isNaN(targetCents) || targetCents <= 0) return;
@@ -378,7 +378,7 @@ function CreateGoalModal({
   const [targetDate, setTargetDate] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError('');
 

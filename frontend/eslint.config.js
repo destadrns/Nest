@@ -31,6 +31,7 @@ export default [
       'react-refresh': reactRefresh,
     },
     rules: {
+      ...tsPlugin.configs['eslint-recommended'].rules,
       ...tsPlugin.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': [
