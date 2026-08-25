@@ -176,7 +176,7 @@ export function DashboardPage() {
       type: txForm.type,
       amount: amountCents,
       description: txForm.description,
-      date: new Date(txForm.date).toISOString(),
+      date: new Date(txForm.date || Date.now()).toISOString(),
     });
 
     setShowQuickTxModal(false);
@@ -186,7 +186,7 @@ export function DashboardPage() {
       type: 'EXPENSE',
       amount: '',
       description: '',
-      date: new Date().toISOString().split('T')[0],
+      date: new Date().toISOString().split('T')[0]!,
     });
   };
 
@@ -201,7 +201,7 @@ export function DashboardPage() {
       type: 'TRANSFER',
       amount: amountCents,
       description: `${transferForm.description} (Transfer Out)`,
-      date: new Date(transferForm.date).toISOString(),
+      date: new Date(transferForm.date || Date.now()).toISOString(),
     });
 
     setShowTransferModal(false);
@@ -210,7 +210,7 @@ export function DashboardPage() {
       targetAccountId: '',
       amount: '',
       description: 'Internal Transfer',
-      date: new Date().toISOString().split('T')[0],
+      date: new Date().toISOString().split('T')[0]!,
     });
   };
 

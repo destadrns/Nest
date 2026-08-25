@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNetworkStatus } from '@/hooks/use-network-status';
 import { getQueuedTransactions, removeQueuedTransaction } from '@/lib/offline-queue';
 import { api } from '@/lib/api';

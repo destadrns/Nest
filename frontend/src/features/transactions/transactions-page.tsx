@@ -51,7 +51,6 @@ export function TransactionsPage() {
   const [showCreate, setShowCreate] = useState(false);
   const [showFilterDrawer, setShowFilterDrawer] = useState(false);
   const [selectedTx, setSelectedTx] = useState<Transaction | null>(null);
-  const [isEditingTx, setIsEditingTx] = useState(false);
   const [selectedTxIds, setSelectedTxIds] = useState<string[]>([]);
   const [batchCategoryModalOpen, setBatchCategoryModalOpen] = useState(false);
   const [batchCategoryId, setBatchCategoryId] = useState('');

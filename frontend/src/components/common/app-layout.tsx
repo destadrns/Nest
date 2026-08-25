@@ -27,7 +27,6 @@ import {
   Check,
   Sun,
   Moon,
-  Laptop,
   Bell,
   Search,
   CheckCheck,
@@ -67,13 +66,11 @@ export function AppLayout() {
   const [familyDropdownOpen, setFamilyDropdownOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const [currencyDropdownOpen, setCurrencyDropdownOpen] = useState(false);
-  const [themeDropdownOpen, setThemeDropdownOpen] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
   const notifRef = useRef<HTMLDivElement>(null);
   const currencyRef = useRef<HTMLDivElement>(null);
-  const themeRef = useRef<HTMLDivElement>(null);
 
   // Global Keyboard Shortcuts (Ctrl+K / Cmd+K and N)
   useEffect(() => {
@@ -98,7 +95,6 @@ export function AppLayout() {
         setFamilyDropdownOpen(false);
         setProfileDropdownOpen(false);
         setCurrencyDropdownOpen(false);
-        setThemeDropdownOpen(false);
       }
     };
 
@@ -649,7 +645,6 @@ export function AppLayout() {
       {/* Global Command Palette Dialog (⌘K) */}
       {showCommandPalette && (
         <CommandPaletteModal
-          onClose={() => setShowCommandPalette(false)}
           onAction={(action) => {
             setShowCommandPalette(false);
             if (action === 'NEW_TRANSACTION') setShowGlobalQuickTx(true);
@@ -730,10 +725,8 @@ export function AppLayout() {
 }
 
 function CommandPaletteModal({
-  onClose,
   onAction,
 }: {
-  onClose: () => void;
   onAction: (action: string) => void;
 }) {
   const [search, setSearch] = useState('');
