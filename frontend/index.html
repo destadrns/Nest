@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="NEST — Network for Everyday Spending & Tracking. Secure financial workspace for managing household finances, budgets, accounts, and goals." />
+    <meta name="application-name" content="NEST" />
+    <meta property="og:title" content="NEST — Network for Everyday Spending & Tracking" />
+    <meta property="og:description" content="Secure financial workspace for managing household finances, budgets, accounts, and goals." />
+    <meta name="theme-color" content="#101828" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.json" />
+    <title>NEST — Network for Everyday Spending & Tracking</title>
+    <script>
+      (function() {
+        try {
+          var theme = localStorage.getItem('nest_theme');
+          if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.documentElement.setAttribute('data-theme', 'dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.setAttribute('data-theme', 'light');
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

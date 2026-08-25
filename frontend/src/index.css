@@ -1,0 +1,294 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
+
+:root, [data-theme="light"] {
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Brand & Semantic Palette (Light) */
+  --primary-ink: #101828;
+  --primary-ink-hover: #1E293B;
+  --secondary-cobalt: #356AE6;
+  --accent-teal: #18B89A;
+  --accent-amber: #E7A83B;
+  --accent-coral: #E05A67;
+
+  /* Surfaces & Neutral Tokens (Light) */
+  --surface-bg: #F6F8FB;
+  --surface-card: #FFFFFF;
+  --surface-elevated: #FFFFFF;
+  --surface-hover: #F0F4F8;
+  --surface-muted: #F0F4F8;
+  --surface-border: #D9E1EC;
+
+  /* Inputs & Controls (Light) */
+  --input-bg: #FFFFFF;
+  --input-border: #D9E1EC;
+  --input-placeholder: #858F9D;
+  --input-focus-border: #101828;
+
+  /* Typography (Light) */
+  --text-primary: #101828;
+  --text-secondary: #475467;
+  --text-muted: #667085;
+  --text-disabled: #98A2B3;
+
+  /* Centralized Motion Tokens */
+  --motion-instant: 90ms;
+  --motion-fast: 150ms;
+  --motion-standard: 200ms;
+  --motion-comfortable: 260ms;
+  --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-tactile: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.dark, [data-theme="dark"] {
+  /* Brand & Semantic Palette (Dark Charcoal) */
+  --primary-ink: #F3F4F6;
+  --primary-ink-hover: #E5E7EB;
+  --secondary-cobalt: #5B8CFF;
+  --accent-teal: #2BC7A4;
+  --accent-amber: #E8B24A;
+  --accent-coral: #F06B78;
+
+  /* Surfaces & Neutral Tokens (Dark Charcoal) */
+  --surface-bg: #0A0D12;
+  --surface-card: #11151B;
+  --surface-elevated: #181D24;
+  --surface-hover: #20262E;
+  --surface-muted: #181D24;
+  --surface-border: #2A313A;
+
+  /* Inputs & Controls (Dark) */
+  --input-bg: #11151B;
+  --input-border: #2A313A;
+  --input-placeholder: #858F9D;
+  --input-focus-border: #5B8CFF;
+
+  /* Typography (Dark Charcoal) */
+  --text-primary: #F3F4F6;
+  --text-secondary: #B7C0CC;
+  --text-muted: #858F9D;
+  --text-disabled: #475467;
+}
+
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background-color: var(--surface-bg);
+  color: var(--text-primary);
+  transition: background-color var(--motion-fast) var(--ease-standard),
+              color var(--motion-fast) var(--ease-standard);
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--surface-bg);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  transition: background-color var(--motion-fast) var(--ease-standard),
+              color var(--motion-fast) var(--ease-standard);
+}
+
+#root {
+  min-height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Subtle background motifs & tints */
+.bg-financial-subtle {
+  background-color: var(--surface-bg);
+}
+
+.bg-teal-subtle {
+  background-color: rgba(24, 184, 154, 0.08);
+}
+
+.dark .bg-teal-subtle {
+  background-color: rgba(43, 199, 164, 0.12);
+}
+
+.bg-cobalt-subtle {
+  background-color: rgba(53, 106, 230, 0.08);
+}
+
+.dark .bg-cobalt-subtle {
+  background-color: rgba(91, 140, 255, 0.12);
+}
+
+.bg-amber-subtle {
+  background-color: rgba(231, 168, 59, 0.08);
+}
+
+.dark .bg-amber-subtle {
+  background-color: rgba(232, 178, 74, 0.12);
+}
+
+.bg-coral-subtle {
+  background-color: rgba(224, 90, 103, 0.08);
+}
+
+.dark .bg-coral-subtle {
+  background-color: rgba(240, 107, 120, 0.12);
+}
+
+/* ─── Tactile Motion Utility Classes ─── */
+.interactive-card {
+  transition: transform var(--motion-fast) var(--ease-tactile),
+              border-color var(--motion-fast) var(--ease-standard),
+              box-shadow var(--motion-fast) var(--ease-standard),
+              background-color var(--motion-fast) var(--ease-standard);
+  will-change: transform;
+}
+
+.interactive-card:hover {
+  transform: translateY(-1px);
+}
+
+.interactive-card:active {
+  transform: translateY(0px) scale(0.995);
+}
+
+.interactive-row {
+  transition: background-color var(--motion-fast) var(--ease-standard),
+              transform var(--motion-instant) var(--ease-standard);
+}
+
+.interactive-row:active {
+  transform: scale(0.998);
+}
+
+.btn-tactile {
+  transition: transform var(--motion-instant) var(--ease-tactile),
+              background-color var(--motion-fast) var(--ease-standard),
+              border-color var(--motion-fast) var(--ease-standard),
+              box-shadow var(--motion-fast) var(--ease-standard),
+              opacity var(--motion-fast) var(--ease-standard);
+  will-change: transform;
+}
+
+.btn-tactile:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+/* ─── Motion-safe Animation Primitives ─── */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0.9;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes modalPop {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes dropdownEnter {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-page-enter {
+  animation: fadeIn var(--motion-comfortable) var(--ease-enter) forwards;
+}
+
+.animate-drawer-slide {
+  animation: slideInRight var(--motion-comfortable) var(--ease-enter) forwards;
+}
+
+.animate-modal-pop {
+  animation: modalPop var(--motion-fast) var(--ease-enter) forwards;
+}
+
+.animate-dropdown-enter {
+  animation: dropdownEnter var(--motion-fast) var(--ease-enter) forwards;
+}
+
+/* ─── Reduced Motion Media Query ─── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .interactive-card:hover,
+  .interactive-card:active,
+  .btn-tactile:active {
+    transform: none !important;
+  }
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D9E1EC;
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #2A313A;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #98A2B3;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #3B4450;
+}

@@ -1,0 +1,412 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Users ──────────────────────────────────────────────
+
+model User {
+  id                  String    @id @default(cuid())
+  email               String    @unique @db.VarChar(255)
+  passwordHash        String    @db.Text
+  firstName           String    @db.VarChar(100)
+  lastName            String    @db.VarChar(100)
+  mfaEnabled          Boolean   @default(false)
+  mfaSecret           String?   @db.Text
+  recoveryCodesHash   String[]
+  emailVerified       Boolean   @default(false)
+  lastLoginAt         DateTime?
+  failedLoginAttempts Int       @default(0)
+  lockedUntil         DateTime?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  sessions        Session[]
+  passkeys        Passkey[]
+  securityEvents  SecurityEvent[]
+  familyMembers   FamilyMember[]
+  notifications   Notification[]
+  auditLogs       AuditLog[]        @relation("AuditLogUser")
+
+  @@map("users")
+}
+
+// ─── Sessions ───────────────────────────────────────────
+
+model Session {
+  id           String   @id @db.VarChar(64)
+  userId       String
+  ipAddress    String   @db.VarChar(45)
+  userAgent    String?  @db.Text
+  expiresAt    DateTime
+  lastActiveAt DateTime @default(now())
+  createdAt    DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+// ─── Passkeys ───────────────────────────────────────────
+
+model Passkey {
+  id           String    @id @default(cuid())
+  userId       String
+  credentialId String    @unique @db.Text
+  publicKey    String    @db.Text
+  counter      BigInt    @default(0)
+  deviceType   String?   @db.VarChar(50)
+  name         String?   @db.VarChar(100)
+  lastUsedAt   DateTime?
+  createdAt    DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("passkeys")
+}
+
+// ─── Families ───────────────────────────────────────────
+
+model Family {
+  id        String   @id @default(cuid())
+  name      String   @db.VarChar(100)
+  currency  String   @default("USD") @db.VarChar(3)
+  timezone  String   @default("UTC") @db.VarChar(50)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  members               FamilyMember[]
+  accounts              Account[]
+  categories            Category[]
+  budgets               Budget[]
+  financialGoals        FinancialGoal[]
+  recurringTransactions RecurringTransaction[]
+  notifications         Notification[]
+  auditLogs             AuditLog[]
+  transactions          Transaction[]
+
+  @@map("families")
+}
+
+// ─── Family Members ─────────────────────────────────────
+
+enum FamilyRole {
+  OWNER
+  ADMIN
+  MEMBER
+  VIEWER
+}
+
+enum MemberStatus {
+  ACTIVE
+  PENDING
+  REMOVED
+}
+
+model FamilyMember {
+  id        String       @id @default(cuid())
+  userId    String
+  familyId  String
+  role      FamilyRole   @default(MEMBER)
+  status    MemberStatus @default(ACTIVE)
+  joinedAt  DateTime     @default(now())
+  invitedBy String?
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  family Family @relation(fields: [familyId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, familyId])
+  @@index([familyId])
+  @@map("family_members")
+}
+
+// ─── Accounts ───────────────────────────────────────────
+
+enum AccountType {
+  CHECKING
+  SAVINGS
+  CREDIT
+  CASH
+  INVESTMENT
+  LOAN
+  OTHER
+}
+
+model Account {
+  id          String      @id @default(cuid())
+  familyId    String
+  name        String      @db.VarChar(100)
+  type        AccountType
+  balance     BigInt      @default(0) // cents
+  currency    String      @default("USD") @db.VarChar(3)
+  institution String?     @db.VarChar(100)
+  isActive    Boolean     @default(true)
+  createdBy   String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  deletedAt   DateTime?
+
+  family       Family        @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+  recurringTransactions RecurringTransaction[]
+
+  @@index([familyId])
+  @@map("accounts")
+}
+
+// ─── Categories ─────────────────────────────────────────
+
+enum CategoryType {
+  INCOME
+  EXPENSE
+}
+
+model Category {
+  id        String       @id @default(cuid())
+  familyId  String?
+  parentId  String?
+  name      String       @db.VarChar(100)
+  type      CategoryType
+  icon      String?      @db.VarChar(50)
+  color     String?      @db.VarChar(7)
+  isSystem  Boolean      @default(false)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  family   Family?    @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  parent   Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children Category[] @relation("CategoryHierarchy")
+
+  transactions          Transaction[]
+  budgetItems           BudgetItem[]
+  recurringTransactions RecurringTransaction[]
+
+  @@index([familyId])
+  @@map("categories")
+}
+
+// ─── Transactions ───────────────────────────────────────
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+  TRANSFER
+  ADJUSTMENT
+}
+
+model Transaction {
+  id                     String          @id @default(cuid())
+  familyId               String
+  accountId              String
+  categoryId             String?
+  type                   TransactionType
+  amount                 BigInt          // cents, always positive
+  description            String          @db.VarChar(500)
+  notes                  String?         @db.Text
+  date                   DateTime        @db.Date
+  linkedTransactionId    String?         @unique
+  recurringTransactionId String?
+  createdBy              String
+  createdAt              DateTime        @default(now())
+  updatedAt              DateTime        @updatedAt
+  deletedAt              DateTime?
+
+  family              Family                @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  account             Account               @relation(fields: [accountId], references: [id])
+  category            Category?             @relation(fields: [categoryId], references: [id])
+  linkedTransaction   Transaction?          @relation("TransferPair", fields: [linkedTransactionId], references: [id])
+  linkedFrom          Transaction?          @relation("TransferPair")
+  recurringTransaction RecurringTransaction? @relation(fields: [recurringTransactionId], references: [id])
+
+  @@index([familyId, date])
+  @@index([accountId])
+  @@index([categoryId])
+  @@map("transactions")
+}
+
+// ─── Budgets ────────────────────────────────────────────
+
+enum BudgetPeriod {
+  WEEKLY
+  MONTHLY
+  QUARTERLY
+  YEARLY
+}
+
+model Budget {
+  id        String       @id @default(cuid())
+  familyId  String
+  name      String       @db.VarChar(100)
+  period    BudgetPeriod
+  amount    BigInt       // cents
+  startDate DateTime     @db.Date
+  endDate   DateTime?    @db.Date
+  isActive  Boolean      @default(true)
+  createdBy String
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  family Family       @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  items  BudgetItem[]
+
+  @@index([familyId])
+  @@map("budgets")
+}
+
+model BudgetItem {
+  id         String   @id @default(cuid())
+  budgetId   String
+  categoryId String
+  amount     BigInt   // cents
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  budget   Budget   @relation(fields: [budgetId], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [categoryId], references: [id])
+
+  @@unique([budgetId, categoryId])
+  @@map("budget_items")
+}
+
+// ─── Financial Goals ────────────────────────────────────
+
+enum GoalStatus {
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+model FinancialGoal {
+  id            String     @id @default(cuid())
+  familyId      String
+  name          String     @db.VarChar(100)
+  description   String?    @db.VarChar(500)
+  targetAmount  BigInt     // cents
+  currentAmount BigInt     @default(0) // cents
+  targetDate    DateTime?  @db.Date
+  icon          String?    @db.VarChar(50)
+  color         String?    @db.VarChar(7)
+  status        GoalStatus @default(ACTIVE)
+  createdBy     String
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  family Family @relation(fields: [familyId], references: [id], onDelete: Cascade)
+
+  @@index([familyId])
+  @@map("financial_goals")
+}
+
+// ─── Recurring Transactions ─────────────────────────────
+
+enum Frequency {
+  DAILY
+  WEEKLY
+  BIWEEKLY
+  MONTHLY
+  QUARTERLY
+  YEARLY
+}
+
+model RecurringTransaction {
+  id                String    @id @default(cuid())
+  familyId          String
+  accountId         String
+  categoryId        String?
+  type              TransactionType
+  amount            BigInt    // cents
+  description       String    @db.VarChar(500)
+  frequency         Frequency
+  startDate         DateTime  @db.Date
+  endDate           DateTime? @db.Date
+  nextDueDate       DateTime  @db.Date
+  lastProcessedDate DateTime? @db.Date
+  isActive          Boolean   @default(true)
+  createdBy         String
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  family       Family        @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  account      Account       @relation(fields: [accountId], references: [id])
+  category     Category?     @relation(fields: [categoryId], references: [id])
+  transactions Transaction[]
+
+  @@index([nextDueDate, isActive])
+  @@index([familyId])
+  @@map("recurring_transactions")
+}
+
+// ─── Notifications ──────────────────────────────────────
+
+model Notification {
+  id        String   @id @default(cuid())
+  familyId  String
+  userId    String
+  type      String   @db.VarChar(50)
+  title     String   @db.VarChar(200)
+  message   String   @db.Text
+  isRead    Boolean  @default(false)
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  family Family @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead])
+  @@index([familyId])
+  @@map("notifications")
+}
+
+// ─── Audit Logs ─────────────────────────────────────────
+
+model AuditLog {
+  id            String   @id @default(cuid())
+  familyId      String?
+  userId        String?
+  action        String   @db.VarChar(50)
+  resourceType  String   @db.VarChar(50)
+  resourceId    String?
+  metadata      Json?
+  ipAddress     String?  @db.VarChar(45)
+  userAgent     String?  @db.Text
+  correlationId String?  @db.VarChar(64)
+  createdAt     DateTime @default(now())
+
+  family Family? @relation(fields: [familyId], references: [id], onDelete: SetNull)
+  user   User?   @relation("AuditLogUser", fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([familyId, createdAt])
+  @@index([userId])
+  @@map("audit_logs")
+}
+
+// ─── Security Events ────────────────────────────────────
+
+enum Severity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+model SecurityEvent {
+  id        String   @id @default(cuid())
+  userId    String
+  eventType String   @db.VarChar(50)
+  severity  Severity
+  ipAddress String?  @db.VarChar(45)
+  userAgent String?  @db.Text
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@map("security_events")
+}

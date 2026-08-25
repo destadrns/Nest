@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <rect width="32" height="32" rx="7" fill="#101828"/>
+  <rect x="1" y="1" width="30" height="30" rx="6" fill="none" stroke="#356AE6" stroke-opacity="0.3" stroke-width="1"/>
+  <!-- Structural NEST Monogram geometric mark -->
+  <path d="M8 23V9L15 20V9" stroke="#F6F8FB" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M18 9H24.5M18 15.5H23M18 23H24.5" stroke="#18B89A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
