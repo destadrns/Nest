@@ -8,6 +8,15 @@ export default [
     ignores: ['dist/**', 'node_modules/**'],
   },
   js.configs.recommended,
+  {
+    files: ['**/*.js', '**/*.cjs', '**/*.mjs'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+        ...globals.jest,
+      },
+    },
+  },
   ...tsPlugin.configs['flat/recommended'],
   {
     files: ['**/*.ts'],
