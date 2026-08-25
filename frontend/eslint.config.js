@@ -10,6 +10,7 @@ export default [
     ignores: ['dist/**', 'node_modules/**', 'vite.config.ts'],
   },
   js.configs.recommended,
+  ...tsPlugin.configs['flat/recommended'],
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
@@ -26,13 +27,10 @@ export default [
       },
     },
     plugins: {
-      '@typescript-eslint': tsPlugin,
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
     },
     rules: {
-      ...tsPlugin.configs['eslint-recommended'].rules,
-      ...tsPlugin.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': [
         'warn',
@@ -40,7 +38,6 @@ export default [
       ],
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
       '@typescript-eslint/no-explicit-any': 'off',
-      'no-unused-vars': 'off',
     },
   },
 ];
